@@ -46,8 +46,8 @@ def fred_data_enriched(series_id: str):
         for observation in observations
     }
     observations_df = pd.DataFrame.from_dict(df_data, orient="index")
-    observations_df = observations_df.merge(rolling_12(observations_df["value"]), left_index=True, right_index=True)
-    observations_df = observations_df.merge(rolling_3(observations_df["value"]), left_index=True, right_index=True)
+    observations_df = observations_df.merge(rolling_12(observations_df["value"].interpolate()), left_index=True, right_index=True)
+    observations_df = observations_df.merge(rolling_3(observations_df["value"].interpolate()), left_index=True, right_index=True)
     observations_df = observations_df.fillna(NAN_CHAR)
     observations_df = observations_df.astype(str)
     # recombine metadata and observervations as a list of dicts, moving the date index into a key-value pair in the observation
