@@ -3,16 +3,104 @@ from dotenv import load_dotenv
 import requests
 import pandas as pd
 import numpy as np
+import datetime
+import calendar
 
 load_dotenv()
 
-API_KEY = getenv("FRED_API_KEY")
-NAN_CHAR = '.'
+class FRED:
+    """"""
+    NAN_CHAR = '.'
+    def __init__(self, api_key: str|None = None):
+        if not api_key:
+            api_key = getenv('FRED_API_KEY')    # temporary until testing of API with front end dev is complete
+        ROOT_URL = 'https://api.stlouisfed.org/fred'
+        SERIES_URL = ROOT_URL + "/series/observations?series_id={series_id}&file_type=json"
+        API_PARAMETER = f'&api_key={api_key}'
+        self.FULL_URL = SERIES_URL + API_PARAMETER    
 
-ROOT_URL = 'https://api.stlouisfed.org/fred'
-SERIES_URL = ROOT_URL + "/series/observations?series_id={series_id}&file_type=json"
-API_PARAMETER = f'&api_key={API_KEY}'
-FULL_URL = SERIES_URL + API_PARAMETER 
+    def get_data(self, series_id: str) -> dict:
+        response = requests.get(self.FULL_URL.format(series_id=series_id))
+        data: dict = response.json()
+        return data
+
+    def data_enriched(self, series_id: str) -> dict:
+        data = self.get_data(series_id)
+        metadata = {k:v for k,v in data.items() if k != "observations"}
+        observations: list[dict] = data["observations"]
+        def convert_values(observation: dict) -> dict:
+            value = observation.get("value")
+            observation["value"] = float(value) if value != self.NAN_CHAR else np.nan
+            return observation
+        observations = list(map(convert_values, observations))
+        df_data = {
+            pd.to_datetime(observation.pop("date"), format=r'%Y-%m-%d'): observation 
+            for observation in observations
+        }
+        observations_df = pd.DataFrame.from_dict(df_data, orient="index")
+        observations_df = observations_df.merge(rolling_12(observations_df["value"].interpolate()), left_index=True, right_index=True)
+        observations_df = observations_df.merge(rolling_3(observations_df["value"].interpolate()), left_index=True, right_index=True)
+        observations_df = observations_df.fillna(self.NAN_CHAR)
+        observations_df = observations_df.astype(str)
+        # recombine metadata and observervations as a list of dicts, moving the date index into a key-value pair in the observation
+        result = metadata | df_to_list_objs_w_date_indx_as_attr(observations_df, "observations")
+        return result
+
+
+class ClimatePredictionCenter:
+    """"""
+    BASE_URL = "https://ftp.cpc.ncep.noaa.gov/htdocs/degree_days/weighted/daily_data/"
+    LATEST = "latest/"
+    PRIOR_YEAR = str((datetime.datetime.now() - datetime.timedelta(weeks=52)).year) + "/"
+    NORMALS = "climatology/1981-2010/"
+    STATES_COOLING = "StatesCONUS.Cooling.txt"
+    FULL_URL_CURR_DAILY = BASE_URL + LATEST + STATES_COOLING
+    FULL_URL_PY_DAILY = BASE_URL + PRIOR_YEAR + STATES_COOLING
+    FULL_URL_NORMALS = BASE_URL + NORMALS + STATES_COOLING
+
+    def __init__(self, states_selected: list) -> None:
+        self.states_selected = states_selected
+
+    def get_current_daily(self) -> pd.DataFrame:
+        data = pd.read_csv(self.FULL_URL_CURR_DAILY, skiprows=3, delimiter="|")
+        data = data.set_index('Region')
+        first_observation_year = int(data.columns.to_list()[1][:4])
+
+        if first_observation_year == int(self.PRIOR_YEAR[:4]):
+            new_prior_year = str(int(self.PRIOR_YEAR[:4])-1)
+            self.FULL_URL_PY_DAILY = self.BASE_URL + new_prior_year + self.STATES_COOLING
+
+        if calendar.isleap(first_observation_year):
+            data = data.loc[:,~data.columns.str.endswith('0229')]
+
+        data.columns = [pd.to_datetime(date, format=r"%Y%m%d") for date in data.columns]
+        data = data.T.loc[:,self.states_selected]
+
+        return data
+
+
+    def get_prior_year_daily(self) -> pd.DataFrame:
+        data = pd.read_csv(self.FULL_URL_PY_DAILY, skiprows=3, delimiter="|")
+        data = data.set_index('Region')
+        first_observation_year = int(data.columns.to_list()[1][:4])
+
+        if calendar.isleap(first_observation_year):
+            data = data.loc[:,~data.columns.str.endswith('0229')]
+
+        data.columns = [pd.to_datetime(date, format=r"%Y%m%d") for date in data.columns]
+        data = data.T.loc[:,self.states_selected]
+        data = data.reset_index()
+        data["ref_date_index"] = data["index"] + pd.DateOffset(years=1)
+        data = data.set_index("ref_date_index").drop(columns="index")
+
+        return data
+
+    def cooling_degree_days_diff_yoy(self) -> dict:
+        current_year_obs = self.get_current_daily()
+        prior_year_obs = self.get_prior_year_daily()
+        cum_diffs_df = cumulative_differences(current_year_obs, prior_year_obs)
+        return {"metadata": ""} | df_to_list_objs_w_date_indx_as_attr(cum_diffs_df, "observations")
+
 
 
 def rolling_12(data: pd.Series) -> pd.DataFrame:
@@ -30,31 +118,12 @@ def rolling_3(data: pd.Series) -> pd.DataFrame:
     rolling_3_pct.name = "rolling_3_12_pct"
     return pd.merge(rolling_3,rolling_3_pct, left_index=True, right_index=True)
 
+def cumulative_differences(df1: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
+    return (df1 - df2).cumsum().dropna()
 
-def fred_data_enriched(series_id: str):
-    response = requests.get(FULL_URL.format(series_id=series_id))
-    data: dict = response.json()
-    metadata = {k:v for k,v in data.items() if k != "observations"}
-    observations: list[dict] = data["observations"]
-    def convert_values(observation: dict) -> dict:
-        value = observation.get("value")
-        observation["value"] = float(value) if value != NAN_CHAR else np.nan
-        return observation
-    observations = list(map(convert_values, observations))
-    df_data = {
-        pd.to_datetime(observation.pop("date"), format=r'%Y-%m-%d'): observation 
-        for observation in observations
-    }
-    observations_df = pd.DataFrame.from_dict(df_data, orient="index")
-    observations_df = observations_df.merge(rolling_12(observations_df["value"].interpolate()), left_index=True, right_index=True)
-    observations_df = observations_df.merge(rolling_3(observations_df["value"].interpolate()), left_index=True, right_index=True)
-    observations_df = observations_df.fillna(NAN_CHAR)
-    observations_df = observations_df.astype(str)
-    # recombine metadata and observervations as a list of dicts, moving the date index into a key-value pair in the observation
-    result = metadata | {"observations": [
-            {"date": str(i.date())} | v 
-            for i, v in observations_df.to_dict(orient="index").items()
-            ]
-        }
-    return result
-
+def df_to_list_objs_w_date_indx_as_attr(df: pd.DataFrame, top_lvl_key: str) -> dict[str,list]:
+    """
+    the dataframe provided is broken out into a list of objects, in which the index is moved into each object
+    returns the list as a value to a dictionary, under the key provided in the arg `top_lvl_key`
+    """
+    return {top_lvl_key: [{"date": str(i.date())} | v for i, v in df.to_dict(orient="index").items()]}
