@@ -74,7 +74,8 @@ class ClimatePredictionCenter:
             data = data.loc[:,~data.columns.str.endswith('0229')]
 
         data.columns = [pd.to_datetime(date, format=r"%Y%m%d") for date in data.columns]
-        data = data.T.loc[:,self.states_selected]
+        data = data.T
+        data = data.loc[:,data.columns.isin(self.states_selected)]
 
         return data
 
@@ -88,7 +89,8 @@ class ClimatePredictionCenter:
             data = data.loc[:,~data.columns.str.endswith('0229')]
 
         data.columns = [pd.to_datetime(date, format=r"%Y%m%d") for date in data.columns]
-        data = data.T.loc[:,self.states_selected]
+        data = data.T
+        data: pd.DataFrame = data.loc[:,data.columns.isin(self.states_selected)]
         data = data.reset_index()
         data["ref_date_index"] = data["index"] + pd.DateOffset(years=1)
         data = data.set_index("ref_date_index").drop(columns="index")
