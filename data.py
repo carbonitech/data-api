@@ -99,6 +99,7 @@ class ClimatePredictionCenter:
         current_year_obs = self.get_current_daily()
         prior_year_obs = self.get_prior_year_daily()
         cum_diffs_df = cumulative_differences(current_year_obs, prior_year_obs)
+        cum_diffs_df["total"] = cum_diffs_df.apply(sum, axis=1)
         return {"metadata": ""} | df_to_list_objs_w_date_indx_as_attr(cum_diffs_df, "observations")
 
 
