@@ -13,8 +13,8 @@ def get_fred_series_with_calculated_data(series_id: str, fred_api_key: str|None 
 def get_cooling_degree_day_cumulative_differences_yoy(states: str):
     states_split = [e.upper() for e in states.split(",")]
     if any(map(lambda e: len(e)!=2 ,states_split)):
-        HTTPException(
-            status_code=404,
+        raise HTTPException(
+            status_code=400,
             detail="'states' query parameter expects a comma-seperated list of 2-character state identifiers (i.e. 'FL' for 'Florida')"
         )
 
