@@ -54,21 +54,45 @@ class ClimatePredictionCenter:
     PRIOR_YEAR = str((datetime.datetime.now() - datetime.timedelta(weeks=52)).year) + "/"
     NORMALS = "climatology/1981-2010/"
     STATES_COOLING = "StatesCONUS.Cooling.txt"
-    FULL_URL_CURR_DAILY = BASE_URL + LATEST + STATES_COOLING
-    FULL_URL_PY_DAILY = BASE_URL + PRIOR_YEAR + STATES_COOLING
     FULL_URL_NORMALS = BASE_URL + NORMALS + STATES_COOLING
 
-    def __init__(self, states_selected: list) -> None:
+    def __init__(self, states_selected: list, base_year: int = None) -> None:
         self.states_selected = states_selected
+        self.base_year = base_year
+        self.current_year = datetime.datetime.now().year
+        self.length = 0
+        if base_year:
+            self.prior_year = base_year - 1
+        else:
+            self.prior_year = self.current_year - 1
+
+
+    def metadata(self) -> dict:
+        if self.base_year:
+            base_year = self.base_year
+        else:
+            base_year = self.current_year
+        return {"base_year": base_year, "comparison_year": self.prior_year, "length": self.length}
+
+
+    def full_url_base_daily(self) -> str:
+        if self.base_year:
+            return self.BASE_URL + str(self.base_year) + '/' + self.STATES_COOLING
+        else:
+            return self.BASE_URL + self.LATEST + self.STATES_COOLING
+
+    def full_url_comparison_year(self) -> str:
+        return self.BASE_URL + str(self.prior_year) + '/' + self.STATES_COOLING
+
 
     def get_current_daily(self) -> pd.DataFrame:
-        data = pd.read_csv(self.FULL_URL_CURR_DAILY, skiprows=3, delimiter="|")
+        data = pd.read_csv(self.full_url_base_daily(), skiprows=3, delimiter="|")
         data = data.set_index('Region')
-        first_observation_year = int(data.columns.to_list()[1][:4])
+        first_observation_year = int(data.columns.to_list()[0][:4])
 
-        if first_observation_year == int(self.PRIOR_YEAR[:4]):
-            new_prior_year = str(int(self.PRIOR_YEAR[:4])-1)
-            self.FULL_URL_PY_DAILY = self.BASE_URL + new_prior_year + self.STATES_COOLING
+        if first_observation_year == self.prior_year:
+            # edge case for latest data pulling the year prior at the beginning of the new year
+            self.prior_year -= 1
 
         if calendar.isleap(first_observation_year):
             data = data.loc[:,~data.columns.str.endswith('0229')]
@@ -76,14 +100,13 @@ class ClimatePredictionCenter:
         data.columns = [pd.to_datetime(date, format=r"%Y%m%d") for date in data.columns]
         data = data.T
         data = data.loc[:,data.columns.isin(self.states_selected)]
-
         return data
 
 
     def get_prior_year_daily(self) -> pd.DataFrame:
-        data = pd.read_csv(self.FULL_URL_PY_DAILY, skiprows=3, delimiter="|")
+        data = pd.read_csv(self.full_url_comparison_year(), skiprows=3, delimiter="|")
         data = data.set_index('Region')
-        first_observation_year = int(data.columns.to_list()[1][:4])
+        first_observation_year = int(data.columns.to_list()[0][:4])
 
         if calendar.isleap(first_observation_year):
             data = data.loc[:,~data.columns.str.endswith('0229')]
@@ -102,7 +125,8 @@ class ClimatePredictionCenter:
         prior_year_obs = self.get_prior_year_daily()
         cum_diffs_df = cumulative_differences(current_year_obs, prior_year_obs)
         cum_diffs_df["total"] = cum_diffs_df.apply(sum, axis=1)
-        return {"metadata": ""} | df_to_list_objs_w_date_indx_as_attr(cum_diffs_df, "observations")
+        self.length = len(cum_diffs_df)
+        return {"metadata": self.metadata()} | df_to_list_objs_w_date_indx_as_attr(cum_diffs_df, "observations")
 
 
 
