@@ -9,7 +9,8 @@ import calendar
 load_dotenv()
 
 class FRED:
-    """"""
+    """Interface for the FRED API"""
+
     NAN_CHAR = '.'
     def __init__(self, api_key: str|None = None):
         if not api_key:
@@ -19,13 +20,13 @@ class FRED:
         API_PARAMETER = f'&api_key={api_key}'
         self.FULL_URL = SERIES_URL + API_PARAMETER    
 
-    def get_data(self, series_id: str) -> dict:
+    async def get_data(self, series_id: str) -> dict:
         response = requests.get(self.FULL_URL.format(series_id=series_id))
         data: dict = response.json()
         return data
 
-    def data_enriched(self, series_id: str) -> dict:
-        data = self.get_data(series_id)
+    async def data_enriched(self, series_id: str) -> dict:
+        data = await self.get_data(series_id)
         metadata = {k:v for k,v in data.items() if k != "observations"}
         observations: list[dict] = data["observations"]
         def convert_values(observation: dict) -> dict:
@@ -48,7 +49,10 @@ class FRED:
 
 
 class ClimatePredictionCenter:
-    """"""
+    """
+    Interface for the Climate Prediction Center.
+    Degree Day raw data is updated daily and available in pipe-delimited format
+    """
     BASE_URL = "https://ftp.cpc.ncep.noaa.gov/htdocs/degree_days/weighted/daily_data/"
     LATEST = "latest/"
     PRIOR_YEAR = str((datetime.datetime.now() - datetime.timedelta(weeks=52)).year) + "/"
@@ -81,11 +85,12 @@ class ClimatePredictionCenter:
         else:
             return self.BASE_URL + self.LATEST + self.STATES_COOLING
 
+
     def full_url_comparison_year(self) -> str:
         return self.BASE_URL + str(self.prior_year) + '/' + self.STATES_COOLING
 
 
-    def get_current_daily(self) -> pd.DataFrame:
+    async def get_current_daily(self) -> pd.DataFrame:
         data = pd.read_csv(self.full_url_base_daily(), skiprows=3, delimiter="|")
         data = data.set_index('Region')
         first_observation_year = int(data.columns.to_list()[0][:4])
@@ -103,7 +108,7 @@ class ClimatePredictionCenter:
         return data
 
 
-    def get_prior_year_daily(self) -> pd.DataFrame:
+    async def get_prior_year_daily(self) -> pd.DataFrame:
         data = pd.read_csv(self.full_url_comparison_year(), skiprows=3, delimiter="|")
         data = data.set_index('Region')
         first_observation_year = int(data.columns.to_list()[0][:4])
@@ -117,17 +122,25 @@ class ClimatePredictionCenter:
         data = data.reset_index()
         data["ref_date_index"] = data["index"] + pd.DateOffset(years=1)
         data = data.set_index("ref_date_index").drop(columns="index")
-
         return data
 
-    def cooling_degree_days_diff_yoy(self) -> dict:
-        current_year_obs = self.get_current_daily()
-        prior_year_obs = self.get_prior_year_daily()
-        cum_diffs_df = cumulative_differences(current_year_obs, prior_year_obs)
-        cum_diffs_df["total"] = cum_diffs_df.apply(sum, axis=1)
-        self.length = len(cum_diffs_df)
-        return {"metadata": self.metadata()} | df_to_list_objs_w_date_indx_as_attr(cum_diffs_df, "observations")
 
+    async def cooling_degree_days_diff_yoy(self) -> dict:
+        current_year_obs = await self.get_current_daily()
+        prior_year_obs = await self.get_prior_year_daily()
+        cum_diffs_df = cumulative_differences(current_year_obs, prior_year_obs)
+        cum_diffs_df["total"] = cum_diffs_df.apply(sum, axis=1)  
+        return self.formatted_output(cum_diffs_df)
+
+
+    async def cooling_degree_days(self) -> dict:
+        df = await self.get_current_daily()
+        return self.formatted_output(df)
+
+
+    def formatted_output(self, dataframe: pd.DataFrame) -> dict:
+        self.length = len(dataframe)
+        return {"metadata": self.metadata()} | df_to_list_objs_w_date_indx_as_attr(dataframe, "observations")
 
 
 def rolling_12(data: pd.Series) -> pd.DataFrame:
