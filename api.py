@@ -40,6 +40,15 @@ async def get_cooling_degree_days_raw(states: str, year: int|None = None):
     cpc = ClimatePredictionCenter(states_split, year)
     return await cpc.cooling_degree_days()
 
+
+@app.get("/cdd/cumulative")
+async def get_cumulative_cdd(states: str, normals: bool=False):
+    states_split = [e.upper() for e in states.split(",")]
+    assert valid_states_input(states_split)
+    cpc = ClimatePredictionCenter(states_split)
+    return await cpc.cooling_degree_days_cumulative(normals)
+
+
 @app.get("/cdd/cumulative-differences")
 async def get_cooling_degree_day_cumulative_differences_yoy(states: str, base_year: int|None = None):
     states_split = [e.upper() for e in states.split(",")]
