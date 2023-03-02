@@ -42,10 +42,14 @@ async def get_cooling_degree_days_raw(states: str, year: int|None = None):
 
 
 @app.get("/cdd/cumulative")
-async def get_cumulative_cdd(states: str, normals: bool=False):
+async def get_cumulative_cdd(states: str, normals: bool=False, base_year: int|None = None):
     states_split = [e.upper() for e in states.split(",")]
     assert valid_states_input(states_split)
-    cpc = ClimatePredictionCenter(states_split)
+    if base_year:
+        if base_year < 0:
+            base_year = abs(base_year)
+        assert valid_year_input(base_year)
+    cpc = ClimatePredictionCenter(states_split, base_year)
     return await cpc.cooling_degree_days_cumulative(normals)
 
 
