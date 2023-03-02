@@ -60,11 +60,15 @@ class ClimatePredictionCenter:
     STATES_COOLING = "StatesCONUS.Cooling.txt"
     FULL_URL_NORMALS = BASE_URL + NORMALS + STATES_COOLING
 
-    def __init__(self, states_selected: list, base_year: int = None) -> None:
+    def __init__(self, states_selected: list, base_year: int=None) -> None:
         self.states_selected = states_selected
         self.base_year = base_year
         self.current_year = datetime.datetime.now().year
         self.length = 0
+        self._raw = True
+        self._normals = False
+        self._differences = False
+        self._cumulative = False
         if base_year:
             self.prior_year = base_year - 1
         else:
@@ -76,7 +80,20 @@ class ClimatePredictionCenter:
             base_year = self.base_year
         else:
             base_year = self.current_year
-        return {"base_year": base_year, "comparison_year": self.prior_year, "length": self.length}
+        result = {"length": self.length, "base_year": base_year}
+        response_data = []
+        if self._raw:
+            return result | {"response_data": "raw"}
+        
+        if self._normals:
+            response_data.append("normals")
+        if self._cumulative:
+            response_data.append("cumulative")
+        if self._differences:
+            response_data.append("differences")
+            result |= {"comparison_year": self.prior_year}
+
+        return result | {"response_data": ', '.join(response_data)}
 
 
     def full_url_base_daily(self) -> str:
@@ -88,6 +105,10 @@ class ClimatePredictionCenter:
 
     def full_url_comparison_year(self) -> str:
         return self.BASE_URL + str(self.prior_year) + '/' + self.STATES_COOLING
+    
+
+    def full_url_base_normals(self) -> str:
+        return self.BASE_URL + self.NORMALS + self.STATES_COOLING
 
 
     async def get_current_daily(self) -> pd.DataFrame:
@@ -98,9 +119,6 @@ class ClimatePredictionCenter:
         if first_observation_year == self.prior_year:
             # edge case for latest data pulling the year prior at the beginning of the new year
             self.prior_year -= 1
-
-        if calendar.isleap(first_observation_year):
-            data = data.loc[:,~data.columns.str.endswith('0229')]
 
         data.columns = [pd.to_datetime(date, format=r"%Y%m%d") for date in data.columns]
         data = data.T
@@ -125,13 +143,40 @@ class ClimatePredictionCenter:
         return data
 
 
+    async def get_normals_daily(self) -> pd.DataFrame:
+        data = pd.read_csv(self.full_url_base_normals(), skiprows=3, delimiter="|")
+        data = data.set_index('Region')
+        ref_year = self.base_year if self.base_year else self.current_year
+
+        if not calendar.isleap(ref_year):
+            data = data.loc[:,~data.columns.str.endswith('0229')]
+
+        data.columns = [pd.to_datetime(str(ref_year) + date, format=r"%Y%m%d") for date in data.columns]
+        data = data.T
+        data = data.loc[:,data.columns.isin(self.states_selected)]
+        self._normals = True
+        return data
+
+
     async def cooling_degree_days_diff_yoy(self) -> dict:
         current_year_obs = await self.get_current_daily()
         prior_year_obs = await self.get_prior_year_daily()
         cum_diffs_df = cumulative_differences(current_year_obs, prior_year_obs)
         cum_diffs_df["total"] = cum_diffs_df.apply(sum, axis=1)  
+        self._cumulative = True
+        self._differences = True
+        self._raw = False
         return self.formatted_output(cum_diffs_df)
 
+
+    async def cooling_degree_days_cumulative(self, normals: bool):
+        if normals:
+            observations = await self.get_normals_daily()
+        else:
+            observations = await self.get_current_daily()
+        self._cumulative = True
+        self._raw = False
+        return self.formatted_output(observations.cumsum())
 
     async def cooling_degree_days(self) -> dict:
         df = await self.get_current_daily()
