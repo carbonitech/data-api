@@ -56,8 +56,7 @@ class ClimatePredictionCenter:
 
         return result | {"response_data": ', '.join(response_data)}
 
-    def get_climate_div_county_state_map(self) -> pd.DataFrame:
-        return pd.read_csv("./db/state_clim_divs.csv")
+
 
     def full_url_base_daily(self) -> str:
         if self.base_year:
@@ -102,7 +101,7 @@ class ClimatePredictionCenter:
 
         data.columns = [pd.to_datetime(date, format=r"%Y%m%d") for date in data.columns]
         if self.climate_divs:
-            data = self.match_climate_ids_to_states(data)
+            data = await self.match_climate_ids_to_states(data)
         data = data.T
         data = data.loc[:,(self.states_selected)]
         return data
@@ -118,7 +117,7 @@ class ClimatePredictionCenter:
 
         data.columns = [pd.to_datetime(date, format=r"%Y%m%d") for date in data.columns]
         if self.climate_divs:
-            data = self.match_climate_ids_to_states(data)
+            data = await self.match_climate_ids_to_states(data)
         data = data.T
         data = data.loc[:,(self.states_selected)]
         data = data.reset_index()
@@ -167,14 +166,17 @@ class ClimatePredictionCenter:
         df = await self.get_current_daily()
         return self.formatted_output(df)
 
-    def match_climate_ids_to_states(self, data: pd.DataFrame) -> pd.DataFrame:
+    async def get_climate_div_county_state_map(self) -> pd.DataFrame:
+        return pd.read_csv("./db/region_id_mapping.csv")
+
+    async def match_climate_ids_to_states(self, data: pd.DataFrame) -> pd.DataFrame:
         data = data.reset_index()
-        data["sub_division_id"] = data["Region"].astype(str).str[-2:]
-        data["state_climate_div_prefixes"] = data["Region"].astype(str).str[:-2].astype(int)
-        reference = self.get_climate_div_county_state_map().loc[:,["prefix","state_alt"]]
-        data = data.merge(reference, left_on="state_climate_div_prefixes", right_on="prefix")\
-            .drop(columns=["state_climate_div_prefixes", "prefix", "Region"])\
-            .set_index(["state_alt", "sub_division_id"])
+        reference: pd.DataFrame = await self.get_climate_div_county_state_map()
+        data = data.merge(reference, left_on="Region", right_on="Region ID")
+        # formatting the region column so it shows the region name with the region ID in parentheses
+        data["Region"] = data["Name"].str.cat(data['Region'].astype(str).str[-2:].apply(lambda x: f"({x})"), sep=" ")
+        data = data.drop(columns=["CD", "Name", "Region ID"])\
+            .set_index(["ST", "Region"])
         return data
 
     def formatted_output(self, dataframe: pd.DataFrame) -> dict:
