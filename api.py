@@ -29,32 +29,45 @@ async def get_fred_series_with_calculated_data(series_id: str, fred_api_key: str
 
 ## COOLING DEGREE DAYS (CDD) ##
 @app.get("/cdd")
-async def get_cooling_degree_days_raw(states: str, year: int|None = None):
+async def get_cooling_degree_days_raw(
+        states: str,
+        base_year: int|None = None,
+        climate_divisions: bool=False
+    ):
     states_split = [e.upper() for e in states.split(",")]
     assert valid_states_input(states_split)
-    if year:
-        if year < 0:
-            year = abs(year)
-        assert valid_year_input(year)
+    if base_year:
+        if base_year < 0:
+            base_year = abs(base_year)
+        assert valid_year_input(base_year)
 
-    cpc = ClimatePredictionCenter(states_split, year)
+    cpc = ClimatePredictionCenter(states_split, base_year, climate_divisions)
     return await cpc.cooling_degree_days()
 
 
 @app.get("/cdd/cumulative")
-async def get_cumulative_cdd(states: str, normals: bool=False, base_year: int|None = None):
+async def get_cumulative_cdd(
+        states: str,
+        normals: bool=False,
+        base_year: int|None=None,
+        climate_divisions: bool=False
+    ):
     states_split = [e.upper() for e in states.split(",")]
     assert valid_states_input(states_split)
     if base_year:
         if base_year < 0:
             base_year = abs(base_year)
         assert valid_year_input(base_year)
-    cpc = ClimatePredictionCenter(states_split, base_year)
+    cpc = ClimatePredictionCenter(states_split, base_year, climate_divisions)
     return await cpc.cooling_degree_days_cumulative(normals)
 
 
 @app.get("/cdd/cumulative-differences")
-async def get_cooling_degree_day_cumulative_differences_yoy(states: str, base_year: int|None = None):
+async def get_cooling_degree_day_cumulative_differences_yoy(
+        states: str,
+        base_year: int|None=None,
+        climate_divisions: bool=False
+    ):
     states_split = [e.upper() for e in states.split(",")]
     assert valid_states_input(states_split)
 
@@ -63,5 +76,5 @@ async def get_cooling_degree_day_cumulative_differences_yoy(states: str, base_ye
             base_year = abs(base_year)
         assert valid_year_input(base_year)
 
-    cpc = ClimatePredictionCenter(states_split, base_year)
+    cpc = ClimatePredictionCenter(states_split, base_year, climate_divisions)
     return await cpc.cooling_degree_days_diff_yoy()

@@ -55,14 +55,17 @@ class ClimatePredictionCenter:
     """
     BASE_URL = "https://ftp.cpc.ncep.noaa.gov/htdocs/degree_days/weighted/daily_data/"
     LATEST = "latest/"
-    PRIOR_YEAR = str((datetime.datetime.now() - datetime.timedelta(weeks=52)).year) + "/"
     NORMALS = "climatology/1981-2010/"
     STATES_COOLING = "StatesCONUS.Cooling.txt"
-    FULL_URL_NORMALS = BASE_URL + NORMALS + STATES_COOLING
+    CLIMATE_DIVS_COOLING = "ClimateDivisions.Cooling.txt"
 
-    def __init__(self, states_selected: list, base_year: int=None) -> None:
+    PRIOR_YEAR = str((datetime.datetime.now() - datetime.timedelta(weeks=52)).year) + "/"
+
+
+    def __init__(self, states_selected: list, base_year: int=None, climate_divisions: bool=False) -> None:
         self.states_selected = states_selected
         self.base_year = base_year
+        self.climate_divs = climate_divisions
         self.current_year = datetime.datetime.now().year
         self.length = 0
         self._raw = True
@@ -95,20 +98,47 @@ class ClimatePredictionCenter:
 
         return result | {"response_data": ', '.join(response_data)}
 
+    def get_climate_div_county_state_map(self) -> pd.DataFrame:
+        """
+        retrieves the full county-state mapping to climave division codes
+        but cuts the table down to the codes and states, deduped
+        """
+        data = pd.read_csv("./db/county_clim_divs.csv")
+        data["state_climate_division_id"] = data["CLIMDIV_ID"].astype(str).str[:-2]
+        data["sub_division_id"] = data["CLIMDIV_ID"].astype(str).str[-2:]
+        data = data.loc[:, ["CLIMDIV_ID", "STATE_CODE", "sub_division_id"]].drop_duplicates()
+        return data
 
     def full_url_base_daily(self) -> str:
         if self.base_year:
-            return self.BASE_URL + str(self.base_year) + '/' + self.STATES_COOLING
+            result = self.BASE_URL + str(self.base_year) + '/'
         else:
-            return self.BASE_URL + self.LATEST + self.STATES_COOLING
+            result = self.BASE_URL + self.LATEST
+
+        if self.climate_divs:
+            result += self.CLIMATE_DIVS_COOLING
+        else:
+            result += self.STATES_COOLING
+
+        return result
 
 
     def full_url_comparison_year(self) -> str:
-        return self.BASE_URL + str(self.prior_year) + '/' + self.STATES_COOLING
+        result =  self.BASE_URL + str(self.prior_year) + '/'
+        if self.climate_divs:
+            result += self.CLIMATE_DIVS_COOLING
+        else:
+            result += self.STATES_COOLING
+        return result
     
 
     def full_url_base_normals(self) -> str:
-        return self.BASE_URL + self.NORMALS + self.STATES_COOLING
+        result = self.BASE_URL + self.NORMALS
+        if self.climate_divs:
+            result += self.CLIMATE_DIVS_COOLING
+        else:
+            result += self.STATES_COOLING
+        return result
 
 
     async def get_current_daily(self) -> pd.DataFrame:
@@ -121,8 +151,16 @@ class ClimatePredictionCenter:
             self.prior_year -= 1
 
         data.columns = [pd.to_datetime(date, format=r"%Y%m%d") for date in data.columns]
+        if self.climate_divs:
+            data = data.reset_index()
+            reference = self.get_climate_div_county_state_map()
+            reference["CLIMDIV_ID"] = reference["CLIMDIV_ID"].astype(int)
+            print(data)
+            data = data.merge(reference, left_on=data["Region"], right_on="CLIMDIV_ID")\
+                .drop(columns=["CLIMDIV_ID", "Region"])\
+                .set_index(["STATE_CODE", "sub_division_id"])
         data = data.T
-        data = data.loc[:,data.columns.isin(self.states_selected)]
+        data = data.loc[:,(self.states_selected)]
         return data
 
 
@@ -135,8 +173,15 @@ class ClimatePredictionCenter:
             data = data.loc[:,~data.columns.str.endswith('0229')]
 
         data.columns = [pd.to_datetime(date, format=r"%Y%m%d") for date in data.columns]
+        if self.climate_divs:
+            data = data.reset_index()
+            reference = self.get_climate_div_county_state_map()
+            reference["CLIMDIV_ID"] = reference["CLIMDIV_ID"].astype(int)
+            data = data.merge(reference, left_on=data["Region"], right_on="CLIMDIV_ID")\
+                .drop(columns=["CLIMDIV_ID", "Region"])\
+                .set_index(["STATE_CODE", "sub_division_id"])
         data = data.T
-        data: pd.DataFrame = data.loc[:,data.columns.isin(self.states_selected)]
+        data = data.loc[:,(self.states_selected)]
         data = data.reset_index()
         data["ref_date_index"] = data["index"] + pd.DateOffset(years=1)
         data = data.set_index("ref_date_index").drop(columns="index")
@@ -162,7 +207,8 @@ class ClimatePredictionCenter:
         current_year_obs = await self.get_current_daily()
         prior_year_obs = await self.get_prior_year_daily()
         cum_diffs_df = cumulative_differences(current_year_obs, prior_year_obs)
-        cum_diffs_df["total"] = cum_diffs_df.apply(sum, axis=1)  
+        if not self.climate_divs:   # BUG: Totals, if I keep them, should apply by date, summing the average of the climate divisions
+            cum_diffs_df["total"] = cum_diffs_df.apply(sum, axis=1)
         self._cumulative = True
         self._differences = True
         self._raw = False
@@ -211,4 +257,26 @@ def df_to_list_objs_w_date_indx_as_attr(df: pd.DataFrame, top_lvl_key: str) -> d
     the dataframe provided is broken out into a list of objects, in which the index is moved into each object
     returns the list as a value to a dictionary, under the key provided in the arg `top_lvl_key`
     """
-    return {top_lvl_key: [{"date": str(i.date())} | v for i, v in df.to_dict(orient="index").items()]}
+    df_dict = df.to_dict(orient="index")
+    df_dict_exploded_multi_index: dict[datetime.datetime, dict] = {}
+    match list(df_dict.get(list(df_dict)[0]))[0]:
+        case (k1, k2):
+            delevel_keys = True
+        case _:
+            delevel_keys = False
+
+    if delevel_keys:
+        for date, row in df_dict.items():
+            row: dict
+            df_dict_exploded_multi_index[date] = {}
+            for multi_key, value in row.items():
+                state, subd_code = multi_key
+                if not df_dict_exploded_multi_index[date].get(state):
+                    df_dict_exploded_multi_index[date][state] = {subd_code: value}
+                else:
+                    df_dict_exploded_multi_index[date][state].update({subd_code: value})
+
+        df_dict = df_dict_exploded_multi_index
+
+    return {top_lvl_key: [{"date": str(i.date())} | v for i, v in df_dict.items()]}
+    
