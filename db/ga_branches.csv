@@ -1,0 +1,298 @@
+﻿ID,company_id,name,address,city,state,zip,Climate Division,County
+1,30,1HVAC-Brock (former UNDERWOOD HVAC),"4450 Commerce Drive, SW",Atlanta,GA,30336,902,Fulton County
+2,30,1HVAC-Brock (former UNDERWOOD HVAC),1199 Atlanta Industrial Dr,Marietta,GA,30066,902,Cobb County
+3,31,AIR DEPOT,1101 E. Hill Avenue,Valdosta,GA,31601,908,Lowndes County
+4,32,"AIR SUPPLY GENERAL, INC",15 Westgate Blvd,Savannah,GA,31405,909,Chatham County
+5,33,ALL METRO ELECTRICAL DISTRIBUTORS,3755 Hewatt Court,Snellville,GA,30039,902,Gwinnett County
+6,8,ALPS REFRIGERATION EQPT SALES,2020 Mac Ivor Drive NE,Cairo,GA,39828,907,Grady County
+7,34,APPLIED AIR SOLUTIONS,1205 Johnson Ferry Road,Marietta,GA,30068,902,Cobb County
+8,9,ASSOCIATED EQUIPMENT CO.,2103 North Monroe Street,Albany,GA,31701,907,Dougherty County
+9,9,ASSOCIATED EQUIPMENT CO.,1400 Northbrook Pkwy Ste 330,Suwanee,GA,30024,902,Gwinnett County
+10,35,"ATCO SUPPLY CO., INC.",1475 Chase Street,Athens,GA,30603,902,Clarke County
+11,36,ATLAS MANUFACTURING,9596 Hwy 82 East,Alapaha,GA,31622,908,Berrien County
+12,22,BAKER DISTRIBUTING,423 South Westover Blvd,Albany,GA,31707,907,Dougherty County
+13,22,BAKER DISTRIBUTING,150 Paradise Blvd.,Athens,GA,30607,902,Clarke County
+14,22,BAKER DISTRIBUTING,1158 Logan Circle NW,Atlanta,GA,30318,902,Fulton County
+15,22,BAKER DISTRIBUTING,513 National Avenue,Augusta,GA,30901,906,Richmond County
+16,22,BAKER DISTRIBUTING,2122 Line St.,Brunswick,GA,31520,909,Glynn County
+17,22,BAKER DISTRIBUTING,203 James E. Williams Ind. Drive,Byron,GA,31008,905,Peach County
+18,22,BAKER DISTRIBUTING,9158 Wheat Street,Covington,GA,30014,905,Newton County
+19,22,BAKER DISTRIBUTING,2351 Button Gwinnett Dr. Suite 400A,Doraville,GA,30340,902,DeKalb County
+20,22,BAKER DISTRIBUTING,1414 W Baker Hwy,Douglas,GA,31533,908,Coffee County
+21,22,BAKER DISTRIBUTING,"107 Forest Parkway, Suite 200",Forest Park,GA,30297,904,Muscogee County
+22,22,BAKER DISTRIBUTING,2467 Hilton Drive,Gainesville,GA,30501,902,Hall County
+23,22,BAKER DISTRIBUTING,140 Macon West Dr,Macon,GA,31201,905,Bibb County
+24,22,BAKER DISTRIBUTING,1004 Cobb Pkwy N. Suite-A,Marietta,GA,30062,902,Cobb County
+25,22,BAKER DISTRIBUTING,111 Commercial Blvd.,Martinez,GA,30907,906,Columbia County
+26,22,BAKER DISTRIBUTING,144 Westridge Industrial Blvd.,McDonough,GA,30253,904,Henry County
+27,22,BAKER DISTRIBUTING,601 Hammock Road,Milledgeville,GA,31061,905,Baldwin County
+28,22,BAKER DISTRIBUTING,"5785 Brook Hollow Pkwy, Ste. C",Norcross,GA,30071,902,Gwinnett County
+29,22,BAKER DISTRIBUTING,101-A Kahn Industrial Ct.,Savannah,GA,31405,909,Chatham County
+30,22,BAKER DISTRIBUTING,407 Harmon St,Savannah,GA,31401,909,Chatham County
+31,22,BAKER DISTRIBUTING,311 Stockyard Road,Statesboro,GA,30458,906,Bulloch County
+32,22,BAKER DISTRIBUTING,1102 Smith Ave,Thomasville,GA,31792,902,Fulton County
+33,22,BAKER DISTRIBUTING,156 South Ridge Avenue,Tifton,GA,31794,908,Tift County
+34,22,BAKER DISTRIBUTING,505 East Moore Street,Valdosta,GA,31602,908,Lowndes County
+35,22,BAKER DISTRIBUTING,307 McNatt Street,Vidalia,GA,30474,909,Toombs County
+36,22,BAKER DISTRIBUTING,816 Hicks Street,Waycross,GA,31501,909,Ware County
+37,1,CHADWELL SUPPLY,"7555 Wood Road, Suite 100",Douglasville,GA,30134,904,Douglas County
+38,37,CLIMATIC COMFORT,"6280 Best Friend Road, Suite 100",Norcross,GA,30071,902,Gwinnett County
+39,37,CLIMATIC COMFORT,710 Gil Harbin Industrial Boulevard,Valdosta,GA,31601,908,Lowndes County
+40,37,CLIMATIC COMFORT,107 Borders Way,Warner Robins,GA,31088,905,Houston County
+41,2,CONKLIN METALS,684 Antone St NW #100,Atlanta,GA,30318,902,Fulton County
+42,2,CONKLIN METALS,7995 Third Flag Pkwy #200,Austell,GA,30168,902,Cobb County
+43,2,CONKLIN METALS,200 Piedmont Court Suite D,Norcross,GA,30340,902,Gwinnett County
+44,26,CREGGER COMPANY,375-A Commerce Blvd,Bogart,GA,30622,902,Oconee County
+45,26,CREGGER COMPANY,165 Key Circle Drive,Brunswick,GA,31520,909,Glynn County
+46,26,CREGGER COMPANY,120 Wansley Drive,Cartersville,GA,30121,901,Bartow County
+47,26,CREGGER COMPANY,28 West Gate Blvd,Savannah,GA,31405,909,Chatham County
+48,26,CREGGER COMPANY,1653 Clay Road,Valdosta,GA,31602,908,Lowndes County
+49,27,DEALERS SUPPLY COMPANY,4065 Nine McFarland Drive,Alpharetta,GA,30004,902,Fulton County
+50,27,DEALERS SUPPLY COMPANY,1451 Dale Court,Austell,GA,30168,902,Cobb County
+51,27,DEALERS SUPPLY COMPANY,3020 Sandy Parkway,Columbus,GA,31909,904,Muscogee County
+52,27,DEALERS SUPPLY COMPANY,1591-A Lester Road,Conyers,GA,30012,905,Rockdale County
+53,27,DEALERS SUPPLY COMPANY,2225 Button Gwinnett Drive,Doraville,GA,30340,902,DeKalb County
+54,27,DEALERS SUPPLY COMPANY,82 Kennedy Drive,Forest Park,GA,30297,904,Muscogee County
+55,27,DEALERS SUPPLY COMPANY,"2459 Hilton Court, Ste A",Gainesville,GA,30501,902,Hall County
+56,27,DEALERS SUPPLY COMPANY,1120 Cain Lane,Griffin,GA,30224,904,Spalding County
+57,27,DEALERS SUPPLY COMPANY,4364 Interstate Drive,Macon,GA,31210,905,Bibb County
+58,27,DEALERS SUPPLY COMPANY,"1148 Hayes Industrial Drive, NE",Marietta,GA,30062,902,Cobb County
+59,27,DEALERS SUPPLY COMPANY,10 Pine Road,Newnan,GA,30263,904,Coweta County
+60,38,DEVORE & JOHNSON,176 Forest Parkway,Forest Park,GA,30297,904,Muscogee County
+61,39,DON PARK USA,4310 Old McDonough Rd,Conley,GA,30288,904,Clayton County
+62,40,DUCT-MAX SUPPLY INC,2395 Pleasantdale Rd Ste 2&3,Doraville,GA,30340,902,DeKalb County
+63,23,EAST COAST METALS,980 Irwin Bridge Road,Conyers,GA,30012,905,Rockdale County
+64,23,EAST COAST METALS,"5158 Kennedy Rd, Suite F",Forest Park,GA,30297,904,Muscogee County
+65,23,EAST COAST METALS,1025 Martin Luther King Jr Blvd,Gainesville,GA,30501,902,Hall County
+66,23,EAST COAST METALS,1155 Hayes Industrial Dr.,Marietta,GA,30062,902,Cobb County
+67,23,EAST COAST METALS,365 McDonough Pkwk,McDonough,GA,30253,904,Henry County
+68,23,EAST COAST METALS,1865 Beaver Ridge Circle Suite A,Norcross,GA,30071,902,Gwinnett County
+69,23,EAST COAST METALS,2900-A Tremont Rd,Savannah,GA,31405,909,Chatham County
+70,23,EAST COAST METALS,"255 Satellite Blvd., NW suite 200",Suwanee,GA,30024,902,Gwinnett County
+71,23,EAST COAST METALS,109 Constitution Dr. #700,Warner Robins,GA,31088,905,Houston County
+72,20,ED'S SUPPLY COMPANY,63 Kyle Road,Blue Ridge,GA,30513,902,Fannin County
+73,20,ED'S SUPPLY COMPANY,30 Hickory Springs Industrial Drive,Canton,GA,30155,902,Cherokee County
+74,20,ED'S SUPPLY COMPANY,706 Rustwood Street,Dalton,GA,30721,903,Madison County
+75,20,ED'S SUPPLY COMPANY,2375 Button Gwinnett Dr.,Doraville,GA,30340,902,DeKalb County
+76,41,ENGINEERING & EQUIPMENT,910 North Washington Street,Albany,GA,31701,907,Dougherty County
+77,41,ENGINEERING & EQUIPMENT,4491 River Road,Columbus,GA,31904,904,Muscogee County
+78,41,ENGINEERING & EQUIPMENT,1985 State Street,Waycross,GA,31501,909,Ware County
+79,10,EPTING DISTRIBUTORS,3716 Benchmark Drive,Augusta,GA,30906,906,Richmond County
+80,10,EPTING DISTRIBUTORS,112 Central Junction Drive,Savannah,GA,31405,909,Chatham County
+81,42,FERGUSON ENTERPRISES,1824 Barton Chapel,Augusta,GA,30909,906,Richmond County
+82,42,FERGUSON ENTERPRISES,2375 Button Gwinnett Dr Ste 400,Doraville,GA,30340,902,DeKalb County
+83,42,FERGUSON ENTERPRISES,2375 Button Gwinnett Dr Ste 400,Doraville,GA,30340,902,DeKalb County
+84,42,FERGUSON ENTERPRISES,1190 Kennestone Cir. STE 100,Marietta,GA,30066,902,Cobb County
+85,42,FERGUSON ENTERPRISES,6730 Oakley Industrial Blvd,Union City,GA,30291,902,Fulton County
+86,25,FOX APPLIANCE PARTS,1949 Commerce Road,Athens,GA,30607,902,Clarke County
+87,25,FOX APPLIANCE PARTS,3503 Wrightsboro Road,Augusta,GA,30919,906,Richmond County
+88,25,FOX APPLIANCE PARTS,2508 Cusseta Road,Columbus,GA,31903,904,Muscogee County
+89,25,FOX APPLIANCE PARTS,2910 Northeast Parkway,Doraville,GA,30340,902,DeKalb County
+90,25,FOX APPLIANCE PARTS,801 Industrial Boulevard,Gainesville,GA,30501,902,Hall County
+91,25,FOX APPLIANCE PARTS,6357 Hawkinsville Road,Macon,GA,31216,905,Bibb County
+92,25,FOX APPLIANCE PARTS,5375 North Parkway,Morrow,GA,30260,904,Clayton County
+93,43,GAINESVILLE APPLIANCE PARTS,280 High Street West,Gainesville,GA,30501,902,Hall County
+94,44,GAS CONTROLS COMPANY/SOUTHERN AIR,1890 Fletcher Road,Tifton,GA,31794,908,Tift County
+95,24,GEMAIRE,4530 Val North Drive,Valdosta,GA,31602,908,Lowndes County
+96,24,GEMAIRE,4530 Val North Drive,Valdosta,GA,31602,908,Lowndes County
+97,45,GEORGIA AIR ASSOCIATES,6135A Northbelt Drive,Norcross,GA,30071,902,Gwinnett County
+98,46,GOODMAN DISTRIBUTION,2154 Eastview Pkwy,Conyers,GA,30013,905,Rockdale County
+99,46,GOODMAN DISTRIBUTION,5148 Old Kennedy Rd,Forest Park,GA,30297,904,Muscogee County
+100,46,GOODMAN DISTRIBUTION,101 Corporate Park Court S.,LaGrange,GA,30241,904,Troup County
+101,46,GOODMAN DISTRIBUTION,621 Hurricane Shoals Rd #L,Lawrenceville,GA,30045,902,Gwinnett County
+102,46,GOODMAN DISTRIBUTION,"320 Thornton Road, Suite 102",Lithia Springs,GA,30122,904,Douglas County
+103,46,GOODMAN DISTRIBUTION,112 West Macon Park Dr,Macon,GA,31210,905,Bibb County
+104,46,GOODMAN DISTRIBUTION,1840 W Oak Pkwy,Marietta,GA,30062,902,Cobb County
+105,47,GRIFFIN GREENHOUSE(formerly Progress Growers),5350 BallGround Highway,Ball ground,GA,30107,901,Murray County
+106,29,H & S SUPPLY,528 North Main Street,Moultrie,GA,31788,908,Colquitt County
+107,48,HAJOCA,704 McKnight Industrial Blvd,Augusta,GA,30907,906,Richmond County
+108,48,HAJOCA,6415 W Hamilton Park Rd,Columbus,GA,31909,904,Muscogee County
+109,48,HAJOCA,3060 N. Dug Gap Road,Dalton,GA,30720,903,Madison County
+110,49,HAJOCA-APEX SUPPLY,105 Industrial Park Dr,Cumming,GA,30040,902,Forsyth County
+111,49,HAJOCA-APEX SUPPLY,"5651 Old Dixie Highway, Suite 105",Forest Park,GA,30297,904,Muscogee County
+112,49,HAJOCA-APEX SUPPLY,950 Raco Drive,Lawrenceville,GA,30045,902,Gwinnett County
+113,49,HAJOCA-APEX SUPPLY,2250 Sweetwater Industrial Blvd.,Lithia Springs,GA,30122,904,Douglas County
+114,49,HAJOCA-APEX SUPPLY,1295 Field Parkway ,Marietta,GA,30066,902,Cobb County
+115,49,HAJOCA-APEX SUPPLY,6515 McDonough Drive,Norcross,GA,30093,902,Gwinnett County
+116,50,HAJOCA-HUGHES SUPPLY,251 Rose Drive,Brunswick,GA,31520,909,Glynn County
+117,50,HAJOCA-HUGHES SUPPLY,593 Sigman Road,Conyers,GA,30013,905,Rockdale County
+118,50,HAJOCA-HUGHES SUPPLY,1138 US Highway 19 South,Leesburg,GA,31763,904,Muscogee County
+119,50,HAJOCA-HUGHES SUPPLY,520 Hillcrest Industrial Blvd,Macon,GA,31204,905,Bibb County
+120,50,HAJOCA-HUGHES SUPPLY,120 Westridge Industrial Blvd,McDonough,GA,30253,904,Henry County
+121,50,HAJOCA-HUGHES SUPPLY,4116 Ogeechee Road,Savannah,GA,31405,909,Chatham County
+122,11,HEATING & AIR CONDITIONING SUPPLY,4470 Martin Road,Cumming,GA,30028,902,Forsyth County
+123,11,HEATING & AIR CONDITIONING SUPPLY,112 Industrial Blvd.,Eatonton,GA,31024,905,Putnam County
+124,11,HEATING & AIR CONDITIONING SUPPLY,4420 Tuck Road,Loganville,GA,30052,902,Walton County
+125,51,HINKLE METALS & SUPPLY,5000 Burnham Boulevard,Columbus,GA,31907,904,Muscogee County
+126,3,HOLDEN & ASSOCIATES,6675 Jones Mill Court,Norcross,GA,30092,902,Gwinnett County
+127,52,INTEGRATED SUPPLY COMPANY,6639 Macon Rd,Columbus,GA,31907,904,Muscogee County
+128,53,JEDCO SUPPLY,"1105 Satellite Blvd, Suite 300",Suwanee,GA,30024,902,Gwinnett County
+129,54,JOHNSTONE SUPPLY,1870 McFarland Pkwy #250,Alpharetta,GA,30005,902,Fulton County
+130,54,JOHNSTONE SUPPLY,"686 11th Street, NW",Atlanta,GA,30318,902,Fulton County
+131,54,JOHNSTONE SUPPLY,703 McKnight Industrial Blvd.,Augusta,GA,30907,906,Richmond County
+132,54,JOHNSTONE SUPPLY,4820 Clark Howell Highway # A-10,College Park,GA,30349,902,Fulton County
+133,54,JOHNSTONE SUPPLY,950 16th Street,Columbus,GA,31901,904,Muscogee County
+134,54,JOHNSTONE SUPPLY,2805 Premiere Parkway,Duluth,GA,30097,902,Gwinnett County
+135,54,JOHNSTONE SUPPLY,821 Progress Center Court,Lawrenceville,GA,30043,902,Gwinnett County
+136,54,JOHNSTONE SUPPLY,240-A Thornton Road,Lithia Springs,GA,30122,904,Douglas County
+137,54,JOHNSTONE SUPPLY,129 Woodfield Drive,Macon,GA,31210,905,Bibb County
+138,54,JOHNSTONE SUPPLY,"3061-B Kingston Court, SE",Marietta,GA,30067,902,Cobb County
+139,54,JOHNSTONE SUPPLY,5715-B Oakbrook Parkway,Norcross,GA,30093,902,Gwinnett County
+140,54,JOHNSTONE SUPPLY,1250 Northmeadow Parkway Suite 110,Roswell,GA,30076,902,Fulton County
+141,54,JOHNSTONE SUPPLY,1910 Mills B. Lane Blvd,Savannah,GA,31405,909,Chatham County
+142,54,JOHNSTONE SUPPLY,"150 Osigian Blvd, Suite 500",Warner Robins,GA,31088,905,Houston County
+143,55,LENNOX INDUSTRIES,785 Branch Drive,Alpharetta,GA,30004,902,Fulton County
+144,55,LENNOX INDUSTRIES,"1035 Franke Indutrial Court, Suite A",Augusta,GA,30909,906,Richmond County
+145,55,LENNOX INDUSTRIES,2154 Eastview Pkwy,Conyers,GA,30013,905,Rockdale County
+146,55,LENNOX INDUSTRIES,1394 Trae Lane,Lithia Springs,GA,30122,904,Douglas County
+147,55,LENNOX INDUSTRIES,963-A Industrial Park Drive,Marietta,GA,30062,902,Cobb County
+148,55,LENNOX INDUSTRIES,"105 King Mill Rd, Ste 100",McDonough,GA,30253,904,Henry County
+149,55,LENNOX INDUSTRIES,"5065 Buford Highway, Suite 600",Norcross,GA,30071,902,Gwinnett County
+150,56,LINCOLN ASSOCIATES,540 Powder Springs Street SE,Marietta,GA,30064,902,Cobb County
+151,57,MAINTENANCE SUPPLY HEADQUARTERS,505 Best Friend Court Suite 580,Norcross,GA,30071,902,Gwinnett County
+152,12,MANUFACTURED DUCT & SUPPLY,6945 Business Court,Doraville,GA,30340,902,DeKalb County
+153,12,MANUFACTURED DUCT & SUPPLY,2805 F. Premiere Parkway,Duluth,GA,30097,902,Gwinnett County
+154,12,MANUFACTURED DUCT & SUPPLY,"963 Industrial Park Drive, Suite C",Marietta,GA,30062,902,Cobb County
+155,59,"MCCALL'S SUPPLY, INC.",9 Westgate Blvd,Savannah,GA,31405,909,Chatham County
+156,60,MD SUPPLY COMPANY INC,10200 Hazelbrand Road,Covington,GA,30014,905,Newton County
+157,5,MECHANICAL EQUIPMENT CO.,5456 Dalton Court,Braselton,GA,30517,902,Jackson County
+158,5,MECHANICAL EQUIPMENT CO.,2570 Business Drive,Cumming,GA,30040,902,Forsyth County
+159,5,MECHANICAL EQUIPMENT CO.,111-B Tanner Street,Lawrenceville,GA,30045,902,Gwinnett County
+160,5,MECHANICAL EQUIPMENT CO.,"1050 Industrial Park Dr. NE, Suite A",Marietta,GA,30062,902,Cobb County
+161,61,MGM PRODUCTS,1080 Culpepper Dr.,Conyers,GA,30094,905,Rockdale County
+162,4,MINGLEDORFF'S,205 Baldwin Drive,Albany,GA,31707,907,Dougherty County
+163,4,MINGLEDORFF'S,1290 Tacoma Drive,Atlanta,GA,30318,902,Fulton County
+164,4,MINGLEDORFF'S,3618 Wrightsboro Road,Augusta,GA,30909,906,Richmond County
+165,4,MINGLEDORFF'S,105 Whitetail Way,Bogart,GA,30622,902,Oconee County
+166,4,MINGLEDORFF'S,275 Rose Drive,Brunswick,GA,31520,909,Glynn County
+167,4,MINGLEDORFF'S,6201 W. Hamilton Park Drive,Columbus,GA,31909,904,Muscogee County
+168,4,MINGLEDORFF'S,335 Gee's Mill Business Pkwy. NE,Conyers,GA,30013,905,Rockdale County
+169,4,MINGLEDORFF'S,5158 Kennedy Road,Forest Park,GA,30297,904,Muscogee County
+170,4,MINGLEDORFF'S,2472 Hilton Drive,Gainesville,GA,30501,902,Hall County
+171,4,MINGLEDORFF'S,"3715, 21 Hunter Rd",Hilton Head Island,SC,29926,#N/A,#N/A
+172,4,MINGLEDORFF'S,"2111 Cedar Road, Building A",Lawrenceville,GA,30043,902,Gwinnett County
+173,4,MINGLEDORFF'S,"320 Thornton Road, Suite 106",Lithia Springs,GA,30122,904,Douglas County
+174,4,MINGLEDORFF'S,5527 Thomaston Road,Macon,GA,31220,905,Bibb County
+175,4,MINGLEDORFF'S,"1060-D Triad Court, Suite D",Marietta,GA,30062,902,Cobb County
+176,4,MINGLEDORFF'S,70 Enterprise Ct,Newnan,GA,30265,904,Coweta County
+177,4,MINGLEDORFF'S,6675 Jones Mill Court,Norcross,GA,30092,902,Gwinnett County
+178,4,MINGLEDORFF'S,103 Central Junction Drive,Savannah,GA,31405,909,Chatham County
+179,4,MINGLEDORFF'S,126A West Parrish Street,Statesboro,GA,30458,906,Bulloch County
+180,4,MINGLEDORFF'S,363 Connell Road,Valdosta,GA,31602,908,Lowndes County
+181,4,MINGLEDORFF'S,110 Byrd Way,Warner Robins,GA,31088,905,Houston County
+182,62,MOTION INDUSTRIES,1247 Gordon Park Road,Augusta,GA,30901,906,Richmond County
+183,28,N.B. HANDY COMPANY,"305 Best Friend Court, Ste 301",Norcross,GA,30071,902,Gwinnett County
+184,79,NOLAND COMPANY,4084 Presidential Pkwy,Atlanta,GA,30340,902,Fulton County
+185,79,NOLAND COMPANY,2125 Noland Connector,Augusta,GA,30909,906,Richmond County
+186,64,R.E. MICHEL COMPANY,"1015 Union Center Drive, Suite A",Alpharetta,GA,30004,902,Fulton County
+187,64,R.E. MICHEL COMPANY,"735 Park North Blvd, Ste100",Clarkston,GA,30021,902,DeKalb County
+188,64,R.E. MICHEL COMPANY,573 Sigman Road NE,Conyers,GA,30013,905,Rockdale County
+189,64,R.E. MICHEL COMPANY,130 Forest Parkway,Forest Park,GA,30297,904,Muscogee County
+190,64,R.E. MICHEL COMPANY,304 Joy Street,Fort Oglethorpe,GA,30742,901,Catoosa County
+191,64,R.E. MICHEL COMPANY,"4000 Royal Drive, Suite 100",Kennesaw,GA,30144,902,Cobb County
+192,64,R.E. MICHEL COMPANY,825 Progress Center Ave,Lawrenceville,GA,30043,902,Gwinnett County
+193,64,R.E. MICHEL COMPANY,1781 Westfork Dr,Lithia Springs,GA,30122,904,Douglas County
+194,64,R.E. MICHEL COMPANY,227 McDonough Parkway,McDonough,GA,30253,904,Henry County
+195,64,R.E. MICHEL COMPANY,77B Millard Farmer Ind. Blvd.,Newnan,GA,30263,904,Coweta County
+196,64,R.E. MICHEL COMPANY,118-A Owens Industrial Drive,Savannah,GA,31405,909,Chatham County
+197,65,SEASONS 4,4500 Industrial Access,Douglasville,GA,30134,904,Douglas County
+198,66,SOUTHEAST COOLER,1520 Westfork Dr,Lithia Springs,GA,30122,904,Douglas County
+199,13,SOUTHEASTERN METAL SUPPLY,3511 Church Street Bldg. G&H,Clarkston,GA,30021,902,DeKalb County
+200,67,SOUTHERN AIR CONCEPTS,5680D Peachtree Parkway,Norcross,GA,30092,902,Gwinnett County
+201,6,SOUTHERN PIPE & SUPPLY,211 Rose Drive,Brunswick,GA,31520,909,Glynn County
+202,6,SOUTHERN PIPE & SUPPLY,110 Executive Drive,Calhoun,GA,30701,901,Gordon County
+203,6,SOUTHERN PIPE & SUPPLY,510 South Tennessee St,Cartersville,GA,30120,901,Bartow County
+204,6,SOUTHERN PIPE & SUPPLY,1417 Parker Road SW,Conyers,GA,30094,905,Rockdale County
+205,6,SOUTHERN PIPE & SUPPLY,8159 Highway 278 NE,Covington,GA,30014,905,Newton County
+206,6,SOUTHERN PIPE & SUPPLY,106 White Park Drive,Dallas,GA,30132,901,Paulding County
+207,6,SOUTHERN PIPE & SUPPLY,340 River Street,Ellijay,GA,30540,902,Gilmer County
+208,6,SOUTHERN PIPE & SUPPLY,113 Airport Park Drive,Garden City,GA,31405,909,Chatham County
+209,6,SOUTHERN PIPE & SUPPLY,102 North Pine Hill Road,Griffin,GA,30223,904,Spalding County
+210,6,SOUTHERN PIPE & SUPPLY,4200 Wayside Court,Lilburn,GA,30047,902,Gwinnett County
+211,6,SOUTHERN PIPE & SUPPLY,1850 Freeman Parkway,Mableton,GA,30126,902,Cobb County
+212,6,SOUTHERN PIPE & SUPPLY,110 Industrial Park Dr.,Milledgeville,GA,31061,905,Baldwin County
+213,6,SOUTHERN PIPE & SUPPLY,1556 S. Broad Street,Monroe,GA,30655,902,Walton County
+214,6,SOUTHERN PIPE & SUPPLY,212 Jefferson Street,Newnan,GA,30263,904,Coweta County
+215,6,SOUTHERN PIPE & SUPPLY,411 E. 2nd Avenue,Rome,GA,30161,901,Floyd County
+216,6,SOUTHERN PIPE & SUPPLY,402 N. Church Street,Thomaston,GA,30286,904,Upson County
+217,6,SOUTHERN PIPE & SUPPLY,667 Cobbham Road NE,Thomson,GA,30824,906,McDuffie County
+218,68,SOUTHWEST GEORGIA WHOLESALE,421 Industrial Drive,Ellaville,GA,31806,904,Schley County
+219,69,STROMQUIST & COMPANY,4620 S. Atlanta Road,Atlanta,GA,30339,902,Fulton County
+220,70,SUN-AIR SUPPLY,4244 Old Dixie Road,Hapeville,GA,30354,902,Fulton County
+221,71,T & T SUPPLY,519 Industrial Way,Swainsboro,GA,30401,906,Emanuel County
+222,72,TOM BARROW COMPANY,732 Joseph E Lowery Blvd NW,Atlanta,GA,30318,902,Fulton County
+223,72,TOM BARROW COMPANY,"7370 Hodgson Memorial Drive, F-4",Savannah,GA,31406,909,Chatham County
+224,72,TOM BARROW COMPANY,2800 Plant Atkinson Road,Smyrna,GA,30080,902,Cobb County
+225,73,TRANE DSO,"2625 Pinemeadow Ct., Suite A",Duluth,GA,30096,902,Gwinnett County
+226,74,TRANE PARTS,1175 Northmeadow Pkwy,Alpharetta,GA,30076,902,Fulton County
+227,75,TRANE SUPPLY,"4000 Dekalb Technology Parkway, Ste 100",Atlanta,GA,30340,902,Fulton County
+228,75,TRANE SUPPLY,1535 Northeast Expressway,Atlanta,GA,30329,902,Fulton County
+229,75,TRANE SUPPLY,804 Trane Road,Augusta,GA,30909,906,Richmond County
+230,75,TRANE SUPPLY,"610 Airport South Parkway, Suite 350",College Park,GA,30349,902,Fulton County
+231,75,TRANE SUPPLY,3547 Gentian Blvd,Columbus,GA,31907,904,Muscogee County
+232,75,TRANE SUPPLY,"5021 Old Dixie Hwy, Suite 500",Forest Park,GA,30297,904,Muscogee County
+233,75,TRANE SUPPLY,"3850 Kennesaw 75 Pkwy, Ste 270",Kennesaw,GA,30144,902,Cobb County
+234,75,TRANE SUPPLY,125 Macon West Drive,Macon,GA,31210,905,Bibb County
+235,75,TRANE SUPPLY,3061 Kingston Ct. Suite C,Marietta,GA,30067,902,Cobb County
+236,75,TRANE SUPPLY,"3609 Ogeechee Rd., Suite A",Savannah,GA,31405,909,Chatham County
+237,75,TRANE SUPPLY,"3609 Ogeechee Rd, Suite A",Savannah,GA,31405,909,Chatham County
+238,14,TRI-STATE DISTRIBUTORS,1160 Barber Street,Athens,GA,30601,902,Clarke County
+239,14,TRI-STATE DISTRIBUTORS,1825 Gordon Highway,Augusta,GA,30904,906,Richmond County
+240,14,TRI-STATE DISTRIBUTORS,2482 Hilton Dr,Gainesville,GA,30501,902,Hall County
+241,14,TRI-STATE DISTRIBUTORS,2500 Hwy 17,Royston,GA,30662,903,Hart County
+242,76,UNI TEMP REFRIGERATION,4487 S Old Peachtree Rd,Norcross,GA,30071,902,Gwinnett County
+243,7,UNITED REFRIGERATION,101 Baldwin Dr.,Albany,GA,31707,907,Dougherty County
+244,7,UNITED REFRIGERATION,118 Rowe Road,Athens,GA,30601,902,Clarke County
+245,7,UNITED REFRIGERATION,4050 Southmeadow Parkway West,Atlanta,GA,30349,902,Fulton County
+246,7,UNITED REFRIGERATION,1061 Howell Mill Rd.,Atlanta,GA,30318,902,Fulton County
+247,7,UNITED REFRIGERATION,679 11th Street,Atlanta,GA,30318,902,Fulton County
+248,7,UNITED REFRIGERATION,702 7th Street,Augusta,GA,30901,906,Richmond County
+249,7,UNITED REFRIGERATION,3825 Wrightsboro Rd,Augusta,GA,30909,906,Richmond County
+250,7,UNITED REFRIGERATION,1706-A Second Street,Brunswick,GA,31520,909,Glynn County
+251,7,UNITED REFRIGERATION,302 Aycock Street,Carrollton,GA,30117,904,Carroll County
+252,7,UNITED REFRIGERATION,830 Joe Frank Harris Parkway,Cartersville,GA,30120,901,Bartow County
+253,7,UNITED REFRIGERATION,609 Cordell Drive,College Park,GA,30349,902,Fulton County
+254,7,UNITED REFRIGERATION,4694 Aviation Parkway,College Park,GA,30349,902,Fulton County
+255,7,UNITED REFRIGERATION,1118 Virginia Street,Columbus,GA,31901,904,Muscogee County
+256,7,UNITED REFRIGERATION,2050 Sigman Road,Conyers,GA,30012,905,Rockdale County
+257,7,UNITED REFRIGERATION,625 Glenwood Place Suite 1,Dalton,GA,30720,903,Madison County
+258,7,UNITED REFRIGERATION,2920 Northeast Pkwy,Doraville,GA,30360,902,DeKalb County
+259,7,UNITED REFRIGERATION,4195 Pleasantdale Road,Doraville,GA,30340,902,DeKalb County
+260,7,UNITED REFRIGERATION,340 Hudson Road,Griffin,GA,30223,904,Spalding County
+261,7,UNITED REFRIGERATION,"2105 Newpoint Place, Suite 300",Lawrenceville,GA,30043,902,Gwinnett County
+262,7,UNITED REFRIGERATION,"240 Thorton Road, Suite C",Lithia Springs,GA,30122,904,Douglas County
+263,7,UNITED REFRIGERATION,"420 Thornton Road, Suite 107",Lithia Springs,GA,30122,904,Douglas County
+264,7,UNITED REFRIGERATION,143 State Street,Macon,GA,31206,905,Bibb County
+265,7,UNITED REFRIGERATION,190 Lower Bay Street,Macon,GA,31208,905,Bibb County
+266,7,UNITED REFRIGERATION,"1990 Delk Industrial Blvd, Suite 108",Marietta,GA,30067,902,Cobb County
+267,7,UNITED REFRIGERATION,3061-F Kingston Ct. Suite F,Marietta,GA,30067,902,Cobb County
+268,7,UNITED REFRIGERATION,1770 Corporate Drive,Norcross,GA,30093,902,Gwinnett County
+269,7,UNITED REFRIGERATION,101 Elizabeth Street,Rome,GA,30165,901,Floyd County
+270,7,UNITED REFRIGERATION,1175 N Meadow Pkwy,Roswell,GA,30076,902,Fulton County
+271,7,UNITED REFRIGERATION,114 Owens Industrial Drive,Savannah,GA,31405,909,Chatham County
+272,7,UNITED REFRIGERATION,16980 Hwy 301 North,Statesboro,GA,30458,906,Bulloch County
+273,7,UNITED REFRIGERATION,180A Victory Drive,Tifton,GA,31794,908,Tift County
+274,7,UNITED REFRIGERATION,512 East Whitman Street,Toccoa,GA,30577,903,Stephens County
+275,7,UNITED REFRIGERATION,1871 Business Parkway,Valdosta,GA,31601,908,Lowndes County
+276,7,UNITED REFRIGERATION,217 S. Commercial Circle,Warner Robins,GA,31088,905,Houston County
+277,7,UNITED REFRIGERATION,413 Hicks Street,Waycross,GA,31501,909,Ware County
+278,77,WHOLESALE SUPPLY GROUP,255 West First Street,Blue Ridge,GA,30513,902,Fannin County
+279,77,WHOLESALE SUPPLY GROUP,"Route 2, Hwy. 76",Chatsworth,GA,30705,901,Murray County
+280,77,WHOLESALE SUPPLY GROUP,418 South Glenwood Avenue,Dalton,GA,30722,903,Madison County
+281,77,WHOLESALE SUPPLY GROUP,2 Church Street,Hiawassee,GA,30546,902,Towns County
+282,77,WHOLESALE SUPPLY GROUP,528 Skyview Lane,Toccoa,GA,30577,903,Stephens County
+283,15,WINAIR,270 Duncan Bridge Road,Baldwin,GA,30510,903,Habersham County
+284,15,WINAIR,5115 Habersham Street,Brunswick,GA,31520,909,Glynn County
+285,15,WINAIR,197 Kilgore Road,Carrollton,GA,30116,904,Carroll County
+286,15,WINAIR,"593 Sigman Road NE, suite 200",Conyers,GA,30013,905,Rockdale County
+287,15,WINAIR,"8960 Highway 5, Bldg. C",Douglasville,GA,30134,904,Douglas County
+288,15,WINAIR,195 Knight Avenue Circle,Waycross,GA,31503,909,Ware County
+289,17,WINLECTRIC,2636A E Oglethorpe Hwy,Hinesville,GA,31313,909,Liberty County
+290,18,WINNELSON,225 Old Clay Street,Marietta,GA,30060,902,Cobb County
+291,19,WINSUPPLY,3 Blalock Mill Dr,Cleveland,GA,30528,902,White County
+292,19,WINSUPPLY,505 Airport Rd,Dublin,GA,31021,905,Laurens County
+293,19,WINSUPPLY,625 Old Norcross Road,Lawrenceville,GA,30046,902,Gwinnett County
+294,21,WITTICHEN SUPPLY COMPANY,1212 Webster Avenue,Columbus,GA,31901,904,Muscogee County
+295,21,WITTICHEN SUPPLY COMPANY,1520 Whitesville Road,LaGrange,GA,30240,904,Troup County
+296,21,WITTICHEN SUPPLY COMPANY,7 Armstrong Street,Rome,GA,30165,901,Floyd County
+297,78,YORK SOURCE 1 HVAC SUPPLY,"4420 Bankers Circle, Suite F",Atlanta,GA,30360,902,Fulton County
