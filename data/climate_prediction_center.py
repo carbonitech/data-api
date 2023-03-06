@@ -15,8 +15,9 @@ class ClimatePredictionCenter:
     LATEST = "latest/"
     NORMALS = "climatology/1981-2010/"
     STATES_COOLING = "StatesCONUS.Cooling.txt"
+    STATES_HEATING = "StatesCONUS.Heating.txt"
     CLIMATE_DIVS_COOLING = "ClimateDivisions.Cooling.txt"
-
+    CLIMATE_DIVS_HEATING = "ClimateDivisions.Heating.txt"
     PRIOR_YEAR = str((datetime.datetime.now() - datetime.timedelta(weeks=52)).year) + "/"
 
 
@@ -135,8 +136,10 @@ class ClimatePredictionCenter:
             data = data.loc[:,~data.columns.str.endswith('0229')]
 
         data.columns = [pd.to_datetime(str(ref_year) + date, format=r"%Y%m%d") for date in data.columns]
+        if self.climate_divs:
+            data = await self.match_climate_ids_to_states(data)
         data = data.T
-        data = data.loc[:,data.columns.isin(self.states_selected)]
+        data = data.loc[:,(self.states_selected)]
         self._normals = True
         return data
 
