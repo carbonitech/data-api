@@ -25,54 +25,58 @@ def valid_year_input(input_year: int) -> bool:
 
     return True
 
-## COOLING DEGREE DAYS (CDD) ##
-@cdd.get("")
-async def get_cooling_degree_days_raw(
-        states: str,
-        base_year: int|None = None,
-        climate_divisions: bool=False
+def init_cpc(
+        states: str=None,
+        base_year: int=None,
+        climate_divisions: bool=False,
+        customer_id: int=None
     ):
-    states_split = [e.upper() for e in states.split(",")]
-    assert valid_states_input(states_split)
+    assert any((states, customer_id)), "either a selection of states or a customer is required"
+    if states:
+        states_split = [e.upper() for e in states.split(",")]
+        assert valid_states_input(states_split)
+    else:
+        states_split = None
     if base_year:
         if base_year < 0:
             base_year = abs(base_year)
         assert valid_year_input(base_year)
 
-    cpc = ClimatePredictionCenter(states_split, base_year, climate_divisions)
+    return ClimatePredictionCenter(states_split, base_year, climate_divisions, customer_id)
+
+## COOLING DEGREE DAYS (CDD) ##
+@cdd.get("")
+@cdd.get("/{customer_id}")
+async def get_cooling_degree_days_raw(
+        states: str|None=None,
+        base_year: int|None = None,
+        climate_divisions: bool=False,
+        customer_id: int|None=None
+    ):
+    cpc = init_cpc(states,base_year,climate_divisions,customer_id)
     return await cpc.cooling_degree_days()
 
 
 @cdd.get("/cumulative")
+@cdd.get("/cumulative/{customer_id}")
 async def get_cumulative_cdd(
-        states: str,
+        states: str|None=None,
         normals: bool=False,
         base_year: int|None=None,
-        climate_divisions: bool=False
+        climate_divisions: bool=False,
+        customer_id: int|None=None
     ):
-    states_split = [e.upper() for e in states.split(",")]
-    assert valid_states_input(states_split)
-    if base_year:
-        if base_year < 0:
-            base_year = abs(base_year)
-        assert valid_year_input(base_year)
-    cpc = ClimatePredictionCenter(states_split, base_year, climate_divisions)
+    cpc = init_cpc(states,base_year,climate_divisions,customer_id)
     return await cpc.cooling_degree_days_cumulative(normals)
 
 
 @cdd.get("/cumulative-differences")
+@cdd.get("/cumulative-differences/{customer_id}")
 async def get_cooling_degree_day_cumulative_differences_yoy(
-        states: str,
+        states: str|None=None,
         base_year: int|None=None,
-        climate_divisions: bool=False
+        climate_divisions: bool=False,
+        customer_id: int|None=None
     ):
-    states_split = [e.upper() for e in states.split(",")]
-    assert valid_states_input(states_split)
-
-    if base_year:
-        if base_year < 0:
-            base_year = abs(base_year)
-        assert valid_year_input(base_year)
-
-    cpc = ClimatePredictionCenter(states_split, base_year, climate_divisions)
+    cpc = init_cpc(states,base_year,climate_divisions,customer_id)
     return await cpc.cooling_degree_days_diff_yoy()

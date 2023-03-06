@@ -21,10 +21,17 @@ class ClimatePredictionCenter:
     PRIOR_YEAR = str((datetime.datetime.now() - datetime.timedelta(weeks=52)).year) + "/"
 
 
-    def __init__(self, states_selected: list, base_year: int=None, climate_divisions: bool=False) -> None:
+    def __init__(
+            self,
+            states_selected: list,
+            base_year: int=None,
+            climate_divisions: bool=False,
+            customer_id: int=None) -> None:
+        
         self.states_selected = states_selected
         self.base_year = base_year
-        self.climate_divs = climate_divisions
+        self.customer = customer_id
+        self.climate_divs = climate_divisions if not customer_id else True
         self.current_year = datetime.datetime.now().year
         self.length = 0
         self._raw = True
@@ -36,6 +43,12 @@ class ClimatePredictionCenter:
         else:
             self.prior_year = self.current_year - 1
 
+    async def get_customer_climate_codes(self) -> list:
+        customers = pd.read_csv("./db/ga_customers.csv").set_index("ID")
+        customer_name = customers.loc[self.customer].at["Customer"]
+        self.customer_name = customer_name
+        branches = pd.read_csv("./db/ga_branches.csv", dtype={"Climate Division": int})
+        return list(set(branches.loc[branches["company_id"] == self.customer, "Climate Division"].to_list()))
 
     def metadata(self) -> dict:
         if self.base_year:
@@ -44,9 +57,10 @@ class ClimatePredictionCenter:
             base_year = self.current_year
         result = {"length": self.length, "base_year": base_year}
         response_data = []
+        if self.customer:
+            result |= {"customer": self.customer_name}
         if self._raw:
             return result | {"response_data": "raw"}
-        
         if self._normals:
             response_data.append("normals")
         if self._cumulative:
@@ -102,9 +116,13 @@ class ClimatePredictionCenter:
 
         data.columns = [pd.to_datetime(date, format=r"%Y%m%d") for date in data.columns]
         if self.climate_divs:
+            if self.customer:
+                climate_divisions = await self.get_customer_climate_codes()
+                data = data.loc[climate_divisions]
             data = await self.match_climate_ids_to_states(data)
         data = data.T
-        data = data.loc[:,(self.states_selected)]
+        if not self.customer:
+            data = data.loc[:,(self.states_selected)]
         return data
 
 
@@ -118,9 +136,13 @@ class ClimatePredictionCenter:
 
         data.columns = [pd.to_datetime(date, format=r"%Y%m%d") for date in data.columns]
         if self.climate_divs:
+            if self.customer:
+                climate_divisions = await self.get_customer_climate_codes()
+                data = data.loc[climate_divisions]
             data = await self.match_climate_ids_to_states(data)
         data = data.T
-        data = data.loc[:,(self.states_selected)]
+        if not self.customer:
+            data = data.loc[:,(self.states_selected)]
         data = data.reset_index()
         data["ref_date_index"] = data["index"] + pd.DateOffset(years=1)
         data = data.set_index("ref_date_index").drop(columns="index", level=0 if self.climate_divs else None)
@@ -137,9 +159,13 @@ class ClimatePredictionCenter:
 
         data.columns = [pd.to_datetime(str(ref_year) + date, format=r"%Y%m%d") for date in data.columns]
         if self.climate_divs:
+            if self.customer:
+                climate_divisions = await self.get_customer_climate_codes()
+                data = data.loc[climate_divisions]
             data = await self.match_climate_ids_to_states(data)
         data = data.T
-        data = data.loc[:,(self.states_selected)]
+        if not self.customer:
+            data = data.loc[:,(self.states_selected)]
         self._normals = True
         return data
 
