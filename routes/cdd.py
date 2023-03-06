@@ -46,7 +46,6 @@ def init_cpc(
 
 ## COOLING DEGREE DAYS (CDD) ##
 @cdd.get("")
-@cdd.get("/{customer_id}")
 async def get_cooling_degree_days_raw(
         states: str|None=None,
         base_year: int|None = None,
@@ -58,7 +57,6 @@ async def get_cooling_degree_days_raw(
 
 
 @cdd.get("/cumulative")
-@cdd.get("/cumulative/{customer_id}")
 async def get_cumulative_cdd(
         states: str|None=None,
         normals: bool=False,
@@ -71,7 +69,6 @@ async def get_cumulative_cdd(
 
 
 @cdd.get("/cumulative-differences")
-@cdd.get("/cumulative-differences/{customer_id}")
 async def get_cooling_degree_day_cumulative_differences_yoy(
         states: str|None=None,
         base_year: int|None=None,
