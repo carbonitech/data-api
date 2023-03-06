@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-from routes import fred, cdd
+from routes import *
 
 app = FastAPI()
 
-app.include_router(fred.fred)
-app.include_router(cdd.cdd)
+app.include_router(fred)
+app.include_router(cdd)
+app.include_router(customers)

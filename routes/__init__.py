@@ -1,2 +1,3 @@
-from routes import cdd
-from routes import fred
+from routes.cdd import cdd
+from routes.fred import fred
+from routes.customers import customers
