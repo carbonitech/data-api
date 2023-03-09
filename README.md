@@ -39,22 +39,22 @@ Output of data-api
 ___
 ## **Climate Prediction Center - Cooling Degree Days**
 Request Cooling Degree Days either in raw numbers, cumulative, or the cumulative difference compared to the prior year, for States and [Climate Divisions](https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/regional_monitoring/CLIM_DIVS/states_counties_climate-divisions.shtml)
-- /cdd
-        - `states`: a single 2-letter state identifier or a list of states (required if customer_id not provided)
-        - `base_year`: the year you'd like to query. Defaults to the current year
-        - `climate_divisions`: The default is state-level data. Setting this to True will break out data by state climate divisions
+- /cdd  
+        - `states`: a single 2-letter state identifier or a list of states (required if customer_id not provided)  
+        - `base_year`: the year you'd like to query. Defaults to the current year  
+        - `climate_divisions`: The default is state-level data. Setting this to True will break out data by state climate divisions  
         - `customer_id`: Specific HVAC Wholesalers can be used to query for climate regions that correspond to their branch footprint. A list of supported customers can be found [here](https://api.carbonitech.com/customers)
-- /cdd/cumulative
-        - `states`: a single 2-letter state identifier or a list of states (required if customer_id not provided)
-        - `base_year`: the year you'd like to query. Defaults to the current year
-        - `climate_divisions`: The default is state-level data. Setting this to True will break out data by state climate divisions
-        - `customer_id`: Specific HVAC Wholesalers can be used to query for climate regions that correspond to their branch footprint. A list of supported customers can be found [here](https://api.carbonitech.com/customers)
-- /cdd/cumulative-differences
-        - `states`: a single 2-letter state identifier or a list of states (required if customer_id not provided)
-        - `normals`: Returns the normal accumulated degree days as estimated by the CPC. The data is invariant to the year, but providing `base_year` will change the dates displayed in the data.
-        - `base_year`: the year you'd like to query. Defaults to the current year
-        - `climate_divisions`: The default is state-level data. Setting this to True will break out data by state climate divisions
-        - `customer_id`: Specific HVAC Wholesalers can be used to query for climate regions that correspond to their branch footprint. A list of supported customers can be found [here](https://api.carbonitech.com/customers)
+- /cdd/cumulative  
+        - `states`: a single 2-letter state identifier or a list of states (required if customer_id not provided)  
+        - `base_year`: the year you'd like to query. Defaults to the current year  
+        - `climate_divisions`: The default is state-level data. Setting this to True will break out data by state climate divisions  
+        - `customer_id`: Specific HVAC Wholesalers can be used to query for climate regions that correspond to their branch footprint. A list of supported customers can be found [here](https://api.carbonitech.com/customers)  
+- /cdd/cumulative-differences  
+        - `states`: a single 2-letter state identifier or a list of states (required if customer_id not provided)  
+        - `normals`: Returns the normal accumulated degree days as estimated by the CPC. The data is invariant to the year, but providing `base_year` will change the dates displayed in the data.  
+        - `base_year`: the year you'd like to query. Defaults to the current year  
+        - `climate_divisions`: The default is state-level data. Setting this to True will break out data by state climate divisions  
+        - `customer_id`: Specific HVAC Wholesalers can be used to query for climate regions that correspond to their branch footprint. A list of supported customers can be found [here](https://api.carbonitech.com/customers)  
 
 ### **Example**
 
