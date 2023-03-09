@@ -8,7 +8,7 @@ Request any FRED data series by Series ID from FRED and get *additional* trendli
 3. Rolling 3 Month Total
 4. Rolling 3/12 %
 
-- /fred-data
+- /fred-data  
         - `series_id`  
         - `fred_api_key`  
 
