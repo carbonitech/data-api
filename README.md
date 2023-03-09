@@ -6,7 +6,11 @@ Request any FRED data series by Series ID from FRED and get *additional* trendli
 1. Rolling 12 Month Total
 2. Rolling 12/12 %
 3. Rolling 3 Month Total
-4. Rolling 3/12 %  
+4. Rolling 3/12 %
+
+- /fred-data  
+        - `series_id`  
+        - `fred_api_key`  
 
 ### **Example**  
 
@@ -32,3 +36,97 @@ Output of data-api
             "rolling_3_month_total": "14501.7",
             "rolling_3_12_pct": "0.04407646063573201"
         }
+___
+## **Climate Prediction Center - Cooling Degree Days**
+Request Cooling Degree Days either in raw numbers, cumulative, or the cumulative difference compared to the prior year, for States and [Climate Divisions](https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/regional_monitoring/CLIM_DIVS/states_counties_climate-divisions.shtml)
+- /cdd  
+        - `states`: a single 2-letter state identifier or a list of states (required if customer_id not provided)  
+        - `base_year`: the year you'd like to query. Defaults to the current year  
+        - `climate_divisions`: The default is state-level data. Setting this to True will break out data by state climate divisions  
+        - `customer_id`: Specific HVAC Wholesalers can be used to query for climate regions that correspond to their branch footprint. A list of supported customers can be found [here](https://api.carbonitech.com/customers)
+- /cdd/cumulative  
+        - `states`: a single 2-letter state identifier or a list of states (required if customer_id not provided)  
+        - `base_year`: the year you'd like to query. Defaults to the current year  
+        - `climate_divisions`: The default is state-level data. Setting this to True will break out data by state climate divisions  
+        - `customer_id`: Specific HVAC Wholesalers can be used to query for climate regions that correspond to their branch footprint. A list of supported customers can be found [here](https://api.carbonitech.com/customers)  
+- /cdd/cumulative-differences  
+        - `states`: a single 2-letter state identifier or a list of states (required if customer_id not provided)  
+        - `normals`: Returns the normal accumulated degree days as estimated by the CPC. The data is invariant to the year, but providing `base_year` will change the dates displayed in the data.  
+        - `base_year`: the year you'd like to query. Defaults to the current year  
+        - `climate_divisions`: The default is state-level data. Setting this to True will break out data by state climate divisions  
+        - `customer_id`: Specific HVAC Wholesalers can be used to query for climate regions that correspond to their branch footprint. A list of supported customers can be found [here](https://api.carbonitech.com/customers)  
+
+### **Example**
+
+Querying for cumulative degree days in 2020 for Florida, Alabama, and California, broken out by Climate Divisions
+
+> Request: GET https://api.carbonitech.com/cdd/cumulative?states=FL,AL,CA&base_year=2020&climate_divisions=true
+
+        {
+          "metadata": {
+            "length": 366,
+            "base_year": 2020,
+            "response_data": "cumulative"
+          },
+          "observations": [
+            {
+              "date": "2020-01-01",
+              "FL": {
+                "NORTHWEST (01)": 0,
+                "NORTH (02)": 0,
+                "NORTH CENTRAL (03)": 0,
+                "SOUTH CENTRAL (04)": 0,
+                "EVERGLADES (05)": 0,
+                "LOWER EAST COAST (06)": 0,
+                "KEYS (07)": 0
+              },
+              "AL": {
+                "NORTHERN VALLEY (01)": 0,
+                "APPALACHIAN MOUNTAIN (02)": 0,
+                "UPPER PLAINS (03)": 0,
+                "EASTERN VALLEY (04)": 0,
+                "PIEDMONT PLATEAU (05)": 0,
+                "PRAIRIE (06)": 0,
+                "COASTAL PLAIN (07)": 0,
+                "GULF (08)": 0
+              },
+              "CA": {
+                "NORTH COAST DRAINAGE (01)": 0,
+                "SACRAMENTO DRNG. (02)": 0,
+                "NORTHEAST INTER. BASINS (03)": 0,
+                "CENTRAL COAST DRNG. (04)": 0,
+                "SAN JOAQUIN DRNG. (05)": 0,
+                "SOUTH COAST DRNG. (06)": 0,
+                "SOUTHEAST DESERT BASIN (07)": 0
+              }
+            }, ...
+            
+Querying for cumulative degree days corresponding to a customer's footprint. Using `EAST COAST METALS`, id = `23`
+> Request: GET https://api.carbonitech.com/cdd/cumulative?customer_id=23
+
+        {
+          "metadata": {
+            "length": 65,
+            "base_year": 2023,
+            "customer": "EAST COAST METALS",
+            "response_data": "cumulative"
+          },
+          "observations": [
+            {
+              "date": "2023-01-01",
+              "GA": {
+                "WEST CENTRAL (04)": 0,
+                "CENTRAL (05)": 0,
+                "SOUTHEAST (09)": 0,
+                "NORTH CENTRAL (02)": 0
+              }
+            },
+            {
+              "date": "2023-01-02",
+              "GA": {
+                "WEST CENTRAL (04)": 0,
+                "CENTRAL (05)": 0,
+                "SOUTHEAST (09)": 0,
+                "NORTH CENTRAL (02)": 0
+              }
+            }, ...
