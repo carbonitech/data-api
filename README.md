@@ -2,17 +2,27 @@
 Enriches JSON data series with calculated trend data
 
 ## **FRED (Saint Louis Federal Reserve)**  
-Request any FRED data series by Series ID from FRED and get *additional* trendline datapoints (observation "value" is provided by FRED)
-1. Rolling 12 Month Total
-2. Rolling 12/12 %
-3. Rolling 3 Month Total
-4. Rolling 3/12 %
-
-- /fred-data  
+1. **Request any FRED data series by Series ID from FRED and get *additional* trendline datapoints (observation "value" is provided by FRED)**
+    * Rolling 12 Month Total
+    * Rolling 12/12 %
+    * Rolling 3 Month Total
+    * Rolling 3/12 %
+<br>  
+   **/fred-data**   
         - `series_id`  
         - `fred_api_key`  
+<br>
+2. **Request Housing Inventory given a state  and get *additional* trendline datapoints with trend metrics**
+    * Rolling 12 Month Total
+    * Rolling 12/12 %
+    * Rolling 3 Month Total
+    * Rolling 3/12 %
+<br>  
+    **/fred-data/housing-inventory**  
+        - `state` : two letter state identifier (i.e. GA for 'Georgia')  
+        - `fred_api_key`  
 
-### **Example**  
+### **Example 1**  
 
 Normal observation output from FRED (in JSON) for series code **GANA**, all non-farm employment in the state of Georgia. (Metadata and other observations excluded for brevity.)
 
@@ -36,6 +46,36 @@ Output of data-api
             "rolling_3_month_total": "14501.7",
             "rolling_3_12_pct": "0.04407646063573201"
         }
+
+
+### **Example 2**  
+
+Housing Inventory given a state, derived from the latest active and pending listing count
+> Request: GET https://api.carbonitech.com/fred-data/housing-inventory?state=GA
+
+      [
+        ...,
+        {
+          "date": "2023-01-01",
+          "realtime_start": "2023-03-12",
+          "realtime_end": "2023-03-12",
+          "value": "37622.0",
+          "rolling_12_month_total": "516865.0",
+          "rolling_12_12_pct": "-0.03260975354116136",
+          "rolling_3_month_total": "123695.0",
+          "rolling_3_12_pct": "-0.0154180463576159"
+        },
+        {
+          "date": "2023-02-01",
+          "realtime_start": "2023-03-12",
+          "realtime_end": "2023-03-12",
+          "value": "39217.0",
+          "rolling_12_month_total": "517308.0",
+          "rolling_12_12_pct": "-0.02492040962887987",
+          "rolling_3_month_total": "118126.0",
+          "rolling_3_12_pct": "-0.010429668847542484"
+        }
+      ]
 ___
 ## **Climate Prediction Center - Cooling Degree Days**
 Request Cooling Degree Days either in raw numbers, cumulative, or the cumulative difference compared to the prior year, for States and [Climate Divisions](https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/regional_monitoring/CLIM_DIVS/states_counties_climate-divisions.shtml)
