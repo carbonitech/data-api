@@ -7,17 +7,17 @@ Enriches JSON data series with calculated trend data
     * Rolling 12/12 %
     * Rolling 3 Month Total
     * Rolling 3/12 %
-<br>  
+  
    **/fred-data**   
         - `series_id`  
         - `fred_api_key`  
-<br>
+
 2. **Request Housing Inventory given a state  and get *additional* trendline datapoints with trend metrics**
     * Rolling 12 Month Total
     * Rolling 12/12 %
     * Rolling 3 Month Total
     * Rolling 3/12 %
-<br>  
+  
     **/fred-data/housing-inventory**  
         - `state` : two letter state identifier (i.e. GA for 'Georgia')  
         - `fred_api_key`  
