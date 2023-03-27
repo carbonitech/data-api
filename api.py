@@ -1,4 +1,5 @@
 from os import getenv
+from datetime import datetime
 from fastapi import FastAPI, Request, Response
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
@@ -27,14 +28,15 @@ async def record_api_call(request: Request, call_next):
     db = next(get_db())
     response = Response("Internal server error", status_code=500)  
     try:
+        time = datetime.utcnow()
         user_agent = request.headers.get("user-agent")
         parameters = str(request.query_params)
         host, port = request.client
         path = request.url.path
 
         db.execute(
-                text("INSERT INTO data_api_request_log (agent, path, parameters, ip) VALUES (:a, :b, :c, :d);"),
-                params={"a": user_agent, "b": path, "c": parameters, "d": host+':'+str(port)}
+                text("INSERT INTO data_api_request_log (agent, path, parameters, ip, time) VALUES (:a, :b, :c, :d, :e);"),
+                params={"a": user_agent, "b": path, "c": parameters, "d": host+':'+str(port), e: time}
             )
         db.commit()
         response = await call_next(request)
