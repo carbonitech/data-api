@@ -36,7 +36,7 @@ async def record_api_call(request: Request, call_next):
 
         db.execute(
                 text("INSERT INTO data_api_request_log (agent, path, parameters, ip, time) VALUES (:a, :b, :c, :d, :e);"),
-                params={"a": user_agent, "b": path, "c": parameters, "d": host+':'+str(port), e: time}
+                params={"a": user_agent, "b": path, "c": parameters, "d": host+':'+str(port), "e": time}
             )
         db.commit()
         response = await call_next(request)
