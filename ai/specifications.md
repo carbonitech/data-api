@@ -1,10 +1,4 @@
 # SPECIFICATIONS
-## Business Admin
-- manage account
-- manage files
-- manage entities (manufacturuers)
-- manage categories associated with entities
-- manage associated users
 ## User
 - ask a question to the bot regarding documents managed by *Business Admin*
     - if the question is too vague or off topic to be answerable, the bot should say it cannot answer
