@@ -1,15 +1,29 @@
+from dotenv import load_dotenv; load_dotenv()
 from os import getenv
 from datetime import datetime
 from fastapi import FastAPI, Request, Response
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
-from routes import *
+from data.routes import *
+from ai.app.main import app as ai
 
 app = FastAPI()
 
 app.include_router(fred)
 app.include_router(cdd)
 app.include_router(customers)
+app.include_router(ai)
+
+ORIGINS = getenv('ORIGINS')
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 db_url = getenv('DATABASE_URL').replace("postgres://","postgresql://")
 engine = create_engine(db_url)

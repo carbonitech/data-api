@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Custom Additions
+*.pdf
+*.csv
+file_scraper.py
+bulk_file_uploader.py
