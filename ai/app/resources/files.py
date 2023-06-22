@@ -2,7 +2,7 @@ from ai.app.resources.dependencies import get_ai, get_db
 from ai.ai.ai import AI
 from ai.db.db import db
 from ai.app.file_handler import File as FileHandler
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from fastapi import File as FileFastAPI
 from pydantic import BaseModel
 
@@ -43,13 +43,17 @@ async def add_file(
         entity: str,
         category: str,
         name: str,
-        file: bytes = FileFastAPI(),
-        ai: AI=Depends(get_ai)
+        bg_tasks: BackgroundTasks,
+        file: bytes=FileFastAPI(),
+        ai: AI=Depends(get_ai),
     ):
    file = FileHandler(entity=entity, category=category, name=name, file_data=file)
+   bg_tasks.add_task(add_file_task, file, ai)
+   return {"detail": "File Submitted"}
+
+def add_file_task(file: FileHandler, ai: AI) -> None:
    embeddings_table = ai.generate_embeddings_table(file=file) 
    ai.save_embeddings(embeddings_table)
-   return {"detail": "File Saved"}
 
 @files.get('')
 async def get_files(db: db=Depends(get_db)) -> FilesResponse:
