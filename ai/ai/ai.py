@@ -68,15 +68,18 @@ class AI:
         embeddings = []
         segments = file.read_and_chunk(3)
         for segment in segments:
+            print("Generating Embedding")
             response = self._create_embedding(segment)
             for i, resp_data_obj in enumerate(response["data"]):
                 assert i == resp_data_obj["index"]  # double check embeddings are in same order as input
             batch_embeddings = [embedding_object["embedding"] for embedding_object in response["data"]]
             embeddings.extend(batch_embeddings)
+        print("segments complete")
         result = pd.DataFrame({'text': segments, 'embedding': embeddings})
         doc_embedding = list(np.mean(result['embedding'].tolist(), axis=0))
         file.add_embedding(embedding=doc_embedding)
         result['file_id'] = self._register_file_with_the_database(file=file)
+        print("File Registered")
         return result
     
     def _register_file_with_the_database(self, file: File) -> int:
