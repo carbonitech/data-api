@@ -121,6 +121,9 @@ class ClimatePredictionCenter:
                 data = data.loc[climate_divisions]
             data = await self.match_climate_ids_to_states(data)
         data = data.T
+        # Source Data may have nonsense negative values like -9999
+        # for every state. Filter those out.
+        data = data[data.ge(0).all(1)] 
         if not self.customer:
             data = data.loc[:,(self.states_selected)]
         return data
