@@ -44,10 +44,10 @@ class ClimatePredictionCenter:
             self.prior_year = self.current_year - 1
 
     async def get_customer_climate_codes(self) -> list:
-        customers = pd.read_csv("./db/ga_customers.csv").set_index("ID")
+        customers = pd.read_csv("./data/ga_customers.csv").set_index("ID")
         customer_name = customers.loc[self.customer].at["Customer"]
         self.customer_name = customer_name
-        branches = pd.read_csv("./db/ga_branches.csv", dtype={"Climate Division": int})
+        branches = pd.read_csv("./data/ga_branches.csv", dtype={"Climate Division": int})
         return list(set(branches.loc[branches["company_id"] == self.customer, "Climate Division"].to_list()))
 
     def metadata(self) -> dict:
@@ -199,7 +199,7 @@ class ClimatePredictionCenter:
         return self.formatted_output(df)
 
     async def get_climate_div_county_state_map(self) -> pd.DataFrame:
-        return pd.read_csv("./db/region_id_mapping.csv")
+        return pd.read_csv("./data/region_id_mapping.csv")
 
     async def match_climate_ids_to_states(self, data: pd.DataFrame) -> pd.DataFrame:
         data = data.reset_index()
