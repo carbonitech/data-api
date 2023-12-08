@@ -9,5 +9,5 @@ customers = APIRouter(prefix="/customers", tags=["Customers"])
 
 @customers.get("")
 async def all_customers():
-    with open('./data/db/ga_customers.csv') as db_file:
+    with open('./data/ga_customers.csv') as db_file:
         return PlainTextResponse(db_file.read())
