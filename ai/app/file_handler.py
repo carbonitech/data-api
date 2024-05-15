@@ -21,12 +21,18 @@ class File:
             return f"{self.entity}_{self.category}.pdf"
     
     def read_file(self) -> None:
-        self.reader = PdfReader(BytesIO(self.file_data) if self.file_data else self.file_path)
+        self.reader = PdfReader(
+            BytesIO(self.file_data)
+            if self.file_data
+            else self.file_path
+        )
         self.num_pages = len(self.reader.pages)
 
     def read_and_chunk(self, chunks: int) -> list[str]:
         """
-        Reads in an entire file and splits the text into equal sections (chunks) per page 
+        Reads in an entire file and splits the text into equal
+        sections (chunks) per page 
+
         Returns: a list of text sections
         """
         self.read_file()

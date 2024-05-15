@@ -1,6 +1,6 @@
 from dotenv import load_dotenv; load_dotenv()
 from os import getenv
-from datetime import datetime
+from datetime import datetime, UTC
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, text
@@ -40,22 +40,31 @@ def get_db():
 @app.middleware('http')
 async def record_api_call(request: Request, call_next):
     db = next(get_db())
+    sql = """
+        INSERT INTO data_api_request_log (agent, path, parameters, ip, time) 
+        VALUES (:a, :b, :c, :d, :e);
+    """
     response = Response("Internal server error", status_code=500)  
     try:
-        time = datetime.utcnow()
+        time = datetime.now(UTC)
         user_agent = request.headers.get("user-agent")
         parameters = str(request.query_params)
         host, port = request.client
         path = request.url.path
 
         db.execute(
-                text("INSERT INTO data_api_request_log (agent, path, parameters, ip, time) VALUES (:a, :b, :c, :d, :e);"),
-                params={"a": user_agent, "b": path, "c": parameters, "d": host+':'+str(port), "e": time}
+                text(sql),
+                params={
+                    "a": user_agent, 
+                    "b": path,
+                    "c": parameters,
+                    "d": host+':'+str(port),
+                    "e": time
+                }
             )
         db.commit()
         response = await call_next(request)
     except Exception as e:
         import traceback
         traceback.print_exc(e)
-
     return response

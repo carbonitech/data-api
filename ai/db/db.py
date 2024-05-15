@@ -1,4 +1,6 @@
-"""Interface for the database with methods designed to handle embeddings, and CRUD on entities that surround the reference files"""
+"""Interface for the database with methods designed to handle 
+    embeddings, and CRUD on entities that surround 
+    the reference files"""
 
 import psycopg2 as pg
 import pandas as pd

@@ -12,16 +12,26 @@ def valid_states_input(states: list[str]) -> bool:
     if any(map(lambda e: len(e)!=2 ,states)):
         raise HTTPException(
             status_code=400,
-            detail="'states' query parameter expects a comma-seperated list of 2-character state identifiers (i.e. 'FL' for 'Florida')"
+            detail="'states' query parameter expects a comma-seperated "
+                    "list of 2-character state identifiers "
+                    "(i.e. 'FL' for 'Florida')"
         )
     return True
     
 def valid_year_input(input_year: int) -> bool:
     current_year = datetime.datetime.now().year
     if len(str(input_year)) != 4:
-        raise HTTPException(400, "Base year should be a 4 digit number representing a year (i.e. 2023)")
+        raise HTTPException(
+            400, 
+            "Base year should be a 4 digit number representing a year "
+                "(i.e. 2023)"
+        )
     elif input_year > current_year:
-        raise HTTPException(400, f"Cannot pull data for a year beyond the current year: {current_year}")
+        raise HTTPException(
+            400, 
+            "Cannot pull data for a year beyond the current year: "
+            f"{current_year}"
+        )
 
     return True
 
@@ -31,7 +41,8 @@ def init_cpc(
         climate_divisions: bool=False,
         customer_id: int=None
     ):
-    assert any((states, customer_id)), "either a selection of states or a customer is required"
+    assert any((states, customer_id)), "either a selection of states or a "\
+        "customer is required"
     if states:
         states_split = [e.upper() for e in states.split(",")]
         assert valid_states_input(states_split)
@@ -42,7 +53,8 @@ def init_cpc(
             base_year = abs(base_year)
         assert valid_year_input(base_year)
 
-    return ClimatePredictionCenter(states_split, base_year, climate_divisions, customer_id)
+    return ClimatePredictionCenter(states_split, base_year, 
+                                   climate_divisions, customer_id)
 
 ## COOLING DEGREE DAYS (CDD) ##
 @cdd.get("")

@@ -47,7 +47,8 @@ async def add_file(
         file: bytes=FileFastAPI(),
         ai: AI=Depends(get_ai),
     ):
-   file = FileHandler(entity=entity, category=category, name=name, file_data=file)
+   file = FileHandler(entity=entity, category=category,
+                      name=name, file_data=file)
    bg_tasks.add_task(add_file_task, file, ai)
    return {"detail": "File Submitted"}
 
@@ -64,7 +65,8 @@ async def get_files(db: db=Depends(get_db)) -> FilesResponse:
         }
     }
     with db as session:
-        result['data']['records'] = session.get_files().to_dict(orient='records')
+        result['data']['records'] = session.get_files()\
+                                           .to_dict(orient='records')
     return result
 
 @files.get('/{file_id}')
