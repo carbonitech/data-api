@@ -8,7 +8,10 @@ from sqlalchemy.orm import sessionmaker
 from data.routes import *
 from ai.app.main import app as ai
 
-app = FastAPI()
+app = FastAPI(
+    title="Carboni Tech Data API",
+    version='0.2.0'
+)
 
 app.include_router(fred)
 app.include_router(cdd)
