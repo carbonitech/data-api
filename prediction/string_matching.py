@@ -7,7 +7,7 @@ from fastapi import APIRouter, Request
 from sklearn.ensemble import RandomForestClassifier
 from prediction import s3
 
-string_matching = APIRouter("/string_matching")
+string_matching = APIRouter(prefix="/string_matching")
 MODEL_PREDICTION_THRESHOLD = 0.5
 
 
