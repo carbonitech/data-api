@@ -35,8 +35,7 @@ async def cmmssns(request: Request):
     if max_score == 0:
         result = 0
     else:
-        max_score_rows: pd.Series = df.loc[df["predictions"] == max_score, "branch_id"]
-        cb_id: int = max_score_rows.iloc[0]
+        cb_id: int = df.loc[df["predictions"] == max_score, "branch_id"].item()
         result = cb_id
     return {"result": result}
 
