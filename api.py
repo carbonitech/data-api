@@ -10,15 +10,12 @@ from sqlalchemy.orm import sessionmaker
 from data.routes import *
 from ai.app.main import app as ai
 
-# from prediction.string_matching import string_matching
-
 app = FastAPI(title="Carboni Tech API", version="0.3.0")
 
 app.include_router(fred)
 app.include_router(cdd)
 app.include_router(customers)
 app.include_router(ai)
-# app.include_router(string_matching, prefix="/prediction")
 
 ORIGINS = getenv("ORIGINS")
 
