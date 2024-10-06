@@ -9,6 +9,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from data.routes import *
 from ai.app.main import app as ai
+from testing.mspa import mspa
 
 app = FastAPI(title="Carboni Tech API", version="0.3.0")
 
@@ -16,6 +17,7 @@ app.include_router(fred)
 app.include_router(cdd)
 app.include_router(customers)
 app.include_router(ai)
+app.include_router(mspa)
 
 ORIGINS = getenv("ORIGINS")
 
