@@ -10,9 +10,9 @@ def get_req(r: Request):
 
 
 @mspa.post("")
-def post_req(r: Request, file: UploadFile = None):
+async def post_req(r: Request, file: UploadFile = None):
     print("--------- HEADERS ---------")
     for header, value in r.headers.items():
         print(f"\t{header}: {value}")
     print("--------- BODY ---------")
-    print(r.body())
+    print(await r.body())
