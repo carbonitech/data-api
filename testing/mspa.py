@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, UploadFile
 
-mspa = APIRouter("/mspa")
+mspa = APIRouter(prefix="/mspa")
 
 
 @mspa.get("")
