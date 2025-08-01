@@ -2,22 +2,47 @@ from dotenv import load_dotenv
 
 load_dotenv()
 from os import getenv
+from contextlib import asynccontextmanager
 from datetime import datetime, UTC
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request, Response, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import create_engine, text
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import text
+from sqlalchemy.orm import Session
 from data.routes import *
-from ai.app.main import app as ai
 from testing.mspa import mspa
+from api_access_gate import access_gate, access_keys
+from db import get_db
 
-app = FastAPI(title="Carboni Tech API", version="0.3.0")
 
-app.include_router(fred)
-app.include_router(cdd)
-app.include_router(customers)
-app.include_router(ai)
-app.include_router(mspa)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # setup access keys
+    db: Session = next(get_db())
+    try:
+        sql = """
+            SELECT id, keyhash, expires, revoked
+            FROM data_api_access_keys
+            WHERE NOT revoked
+            AND (expires IS NULL OR expires > :now)
+        """
+        response = (
+            db.execute(text(sql), params=dict(now=datetime.now(UTC)))
+            .mappings()
+            .fetchall()
+        )
+        if response:
+            access_keys.setup_keystore(records=response)
+    finally:
+        db.close()
+    yield
+    # teardown logic would go here
+
+
+app = FastAPI(title="Carboni Tech API", version="0.3.1", lifespan=lifespan)
+
+app.include_router(fred, dependencies=[Depends(access_gate)])
+app.include_router(cdd, dependencies=[Depends(access_gate)])
+app.include_router(mspa, dependencies=[Depends(access_gate)])
 
 ORIGINS = getenv("ORIGINS")
 
@@ -29,23 +54,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-db_url = getenv("DATABASE_URL").replace("postgres://", "postgresql://")
-engine = create_engine(db_url)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 # middleware for recording all API calls
 @app.middleware("http")
 async def record_api_call(request: Request, call_next):
-    db = next(get_db())
+    db: Session = next(get_db())
     sql = """
         INSERT INTO data_api_request_log (agent, path, parameters, ip, time) 
         VALUES (:a, :b, :c, :d, :e);
@@ -69,9 +82,9 @@ async def record_api_call(request: Request, call_next):
             },
         )
         db.commit()
-        response = await call_next(request)
     except Exception as e:
         import traceback
 
         traceback.print_exc(e)
-    return response
+    finally:
+        return await call_next(request)
