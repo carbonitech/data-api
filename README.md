@@ -140,33 +140,3 @@ Querying for cumulative degree days in 2020 for Florida, Alabama, and California
                 "SOUTHEAST DESERT BASIN (07)": 0
               }
             }, ...
-            
-Querying for cumulative degree days corresponding to a customer's footprint. Using `EAST COAST METALS`, id = `23`
-> Request: GET https://api.carbonitech.com/cdd/cumulative?customer_id=23
-
-        {
-          "metadata": {
-            "length": 65,
-            "base_year": 2023,
-            "customer": "EAST COAST METALS",
-            "response_data": "cumulative"
-          },
-          "observations": [
-            {
-              "date": "2023-01-01",
-              "GA": {
-                "WEST CENTRAL (04)": 0,
-                "CENTRAL (05)": 0,
-                "SOUTHEAST (09)": 0,
-                "NORTH CENTRAL (02)": 0
-              }
-            },
-            {
-              "date": "2023-01-02",
-              "GA": {
-                "WEST CENTRAL (04)": 0,
-                "CENTRAL (05)": 0,
-                "SOUTHEAST (09)": 0,
-                "NORTH CENTRAL (02)": 0
-              }
-            }, ...
