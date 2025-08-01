@@ -2,23 +2,32 @@ from dotenv import load_dotenv
 
 load_dotenv()
 from os import getenv
-from contextlib import asynccontextmanager
 from datetime import datetime, UTC
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request, Response, Depends
 from fastapi.middleware.cors import CORSMiddleware
+
 from sqlalchemy import text
 from sqlalchemy.orm import Session
-from data.routes import *
+
+from data.routes import fred, cdd
 from testing.mspa import mspa
 from api_access_gate import access_gate, access_keys
 from db import get_db
+from logging import getLogger
+
+logger = getLogger("uvicorn.info")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    logger.info("Starting lifespan")
     # setup access keys
+    global access_keys
     db: Session = next(get_db())
     try:
+        logger.info("Setting up access keys")
         sql = """
             SELECT id, keyhash, expires, revoked
             FROM data_api_access_keys
@@ -32,6 +41,8 @@ async def lifespan(app: FastAPI):
         )
         if response:
             access_keys.setup_keystore(records=response)
+    except Exception as e:
+        logger.error(e)
     finally:
         db.close()
     yield
@@ -39,7 +50,6 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Carboni Tech API", version="0.3.1", lifespan=lifespan)
-
 app.include_router(fred, dependencies=[Depends(access_gate)])
 app.include_router(cdd, dependencies=[Depends(access_gate)])
 app.include_router(mspa, dependencies=[Depends(access_gate)])
