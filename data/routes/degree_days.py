@@ -9,9 +9,6 @@ dd = APIRouter(prefix="/degree-days")
 cdd = APIRouter(prefix="/cooling", tags=["Cooling Degree Days"])
 hdd = APIRouter(prefix="/heating", tags=["Heating Degree Days"])
 
-dd.include_router(cdd)
-dd.include_router(hdd)
-
 
 ## COOLING DEGREE DAYS (CDD) ##
 @cdd.get("")
@@ -81,3 +78,7 @@ async def get_heating_degree_day_cumulative_differences_yoy(
     mode = "heating"
     cpc = init_cpc(states, base_year, climate_divisions, mode)
     return await cpc.degree_days_diff_yoy()
+
+
+dd.include_router(cdd)
+dd.include_router(hdd)
