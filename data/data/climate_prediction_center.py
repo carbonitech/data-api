@@ -28,7 +28,7 @@ def init_cpc(
 ) -> "ClimatePredictionCenter":
     try:
         return ClimatePredictionCenter(states, base_year, climate_divisions, mode)
-    except InvalidYear | InvalidState as e:
+    except (InvalidYear, InvalidState) as e:
         raise HTTPException(400, str(e))
     except Exception as e:
         raise e
