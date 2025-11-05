@@ -99,21 +99,6 @@ class ClimatePredictionCenter:
 
         return True
 
-    async def get_customer_climate_codes(self) -> list:
-        customers = pd.read_csv("./data/ga_customers.csv").set_index("ID")
-        customer_name = customers.loc[self.customer].at["Customer"]
-        self.customer_name = customer_name
-        branches = pd.read_csv(
-            "./data/ga_branches.csv", dtype={"Climate Division": int}
-        )
-        return list(
-            set(
-                branches.loc[
-                    branches["company_id"] == self.customer, "Climate Division"
-                ].to_list()
-            )
-        )
-
     def metadata(self) -> dict:
         if self.base_year:
             base_year = self.base_year
@@ -121,8 +106,6 @@ class ClimatePredictionCenter:
             base_year = self.current_year
         result = {"length": self.length, "base_year": base_year}
         response_data = []
-        if self.customer:
-            result |= {"customer": self.customer_name}
         if self._raw:
             return result | {"response_data": "raw"}
         if self._normals:
