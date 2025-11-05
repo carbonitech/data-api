@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from data.routes import fred, cdd
+from data.routes import dd, fred
 from testing.mspa import mspa
 from api_access_gate import access_gate, access_keys
 from db import get_db
@@ -51,7 +51,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Carboni Tech API", version="0.3.1", lifespan=lifespan)
 app.include_router(fred, dependencies=[Depends(access_gate)])
-app.include_router(cdd, dependencies=[Depends(access_gate)])
+app.include_router(dd, dependencies=[Depends(access_gate)])
 app.include_router(mspa, dependencies=[Depends(access_gate)])
 
 ORIGINS = getenv("ORIGINS")
